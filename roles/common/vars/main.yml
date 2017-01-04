@@ -1,0 +1,9 @@
+---
+
+host:
+  name: localhost
+  port: 80
+  user: deploy
+
+project:
+  name: test

@@ -1,0 +1,21 @@
+[uwsgi]
+virtualenv = /home/{{ host.user }}/Envs/{{ project.name }}
+chdir = /home/{{ host.user }}/{{ project.name }}
+wsgi-file = {{ project.name }}/wsgi.py
+
+processes = 2
+thread = 1
+master = true
+
+socket = /home/{{ host.user }}/{{ project.name }}/uwsgi.socket
+chmod-socket = 666
+uid = {{ host.user }}
+gid = {{ host.user }}
+
+procname = {{ project.name }}
+plugin = python3
+
+vacuum = true
+
+logto = /home/{{ host.user }}/{{ project.name }}/log/uwsgi-{{ project.name }}.log
+touch-reload = /etc/uwsgi/apps-enabled/{{ project.name }}

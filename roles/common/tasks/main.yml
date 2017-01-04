@@ -1,0 +1,39 @@
+---
+
+- name: Create "{{ host.user }}" user
+  user:
+    name: "{{ host.user }}"
+    shell: /bin/bash
+    groups: sudo
+    state: present
+
+- name: Update package repository
+  apt:
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Install system packages
+  apt: name={{ item }} state=present install_recommends=yes
+  with_items:
+    - build-essential
+    - python-setuptools
+    - python3-setuptools
+    - python-dev
+    - python3-dev
+    - git
+    - git-flow
+    - redis-server
+    - nginx
+    - uwsgi
+
+- name: Create Nginx configuration file
+  template:
+    src: nginx.j2
+    dest: /etc/nginx/sites-enabled/{{ project.name }}
+  notify: restart nginx
+
+- name: Create uWSGI configuration file
+  template:
+    src: uwsgi.j2
+    dest: /etc/uwsgi/apps-enabled/{{ project.name }}
+  notify: restart uwsgi

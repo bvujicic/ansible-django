@@ -1,0 +1,13 @@
+---
+
+- name: Restart Nginx
+  service:
+    name: nginx
+    state: restarted
+    listen: "restart nginx"
+
+- name: Restart uWSGI
+  service:
+    name: uwsgi
+    state: restarted
+    listen: "restart uwsgi"

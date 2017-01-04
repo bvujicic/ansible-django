@@ -1,0 +1,10 @@
+---
+
+- name: Setup server
+  hosts: webservers
+  user: "{{ host.user }}"
+  become: true
+
+  roles:
+    - common
+    #- database

@@ -1,0 +1,30 @@
+---
+
+- name: Update package repository
+  apt: update_cache=yes cache_valid_time=3600
+
+- name: Install system packages
+  apt:
+    name: "{{ item }}"
+    with_items:
+      - postgresql
+      - postgresql-server-dev-all
+      - python-psycopg2
+
+    state: present
+    install_recommends: yes
+
+- name: Create PostgreSQL user '{{ db.owner }}'
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    name: "{{ db.name }}"
+    password: "{{ db.password }}"
+
+- name: Create PostgreSQL database '{{ db.name }}' with owner '{{ db.owner }}'
+  become: yes
+  become_user: postgres
+  postgresql_db:
+    name: "{{ db.name }}"
+    owner: "{{ db.owner }}"
+    encoding: UTF-8
