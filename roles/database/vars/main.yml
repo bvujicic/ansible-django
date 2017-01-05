@@ -1,6 +1,0 @@
----
-
-db:
-  name: test
-  owner: test
-  password: test

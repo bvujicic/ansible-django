@@ -1,9 +1,10 @@
 #---
-#
 #host:
 #  name: localhost
 #  port: 80
 #  user: deploy
 #
-#project:
+#db:
 #  name: test
+#  owner: test
+#  password: test

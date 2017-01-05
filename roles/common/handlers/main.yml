@@ -1,12 +1,6 @@
 ---
 
-- name: Restart Nginx
-  service:
-    name: nginx
-    state: restarted
-    listen: "restart nginx"
-
-- name: Restart uWSGI
+- name: restart uwsgi
   service:
     name: uwsgi
     state: restarted

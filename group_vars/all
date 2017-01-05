@@ -1,0 +1,24 @@
+host:
+  name: localhost
+  port: 80
+  user: bvujicic
+
+project:
+  name: test_ansible
+  repository: git@gitlab.com:broj42/prostoria.git
+  path: "/home/{{ host.user}}/test_ansible"
+  env_path: "/home/{{ host.user}}/.env/test_ansible"
+  reqs_path: "/home/{{ host.user}}/test_ansible/reqs/base"
+
+
+django:
+  settings_template: "{{ project.path }}/prostoria/local_settings.py"
+
+
+python:
+  version: python3
+
+db:
+  name: test
+  owner: test
+  password: test

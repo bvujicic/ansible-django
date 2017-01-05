@@ -1,0 +1,54 @@
+---
+
+- name: Clone "{{ project.repository }}" repository to "{{ project.path }}"
+  become: true
+  become_user: bvujicic
+  git:
+    repo: "{{ project.repository }}"
+    dest: "{{ project.path }}"
+    accept_hostkey: true
+    version: develop
+    force: true
+
+
+- name: Upgrade pip
+  pip:
+    extra_args: --upgrade
+    executable: pip3.5
+    name:
+      - pip
+      - setuptools
+
+
+- name: Install virtual environment requirements to "{{ project.env_path }}"
+  become: true
+  pip:
+    virtualenv: "{{ project.env_path }}"
+    requirements: "{{ project.reqs_path }}"
+    executable: pip3.5
+    #virtualenv_command: "{{ python.version }} -m venv"
+    #virtualenv_python: python3.5
+
+
+- name: Expand local settings
+  template:
+    src: local_settings.j2
+    dest: "{{ django.settings_template }}"
+
+
+- name: Create local directories
+  file:
+    path: "{{ project.path }}/{{ item }}"
+    state: directory
+    mode: 0755
+
+  with_items:
+    - log
+    - media
+
+
+- name: Migrate the database
+  django_manage:
+    app_path: "{{ project.path }}"
+    command: migrate
+    virtualenv: "{{ project.env_path }}"
