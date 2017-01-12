@@ -1,13 +1,5 @@
 ---
 
-- name: Create "{{ host.user }}" user
-  user:
-    name: "{{ host.user }}"
-    shell: /bin/bash
-    groups: sudo
-    state: present
-
-
 - name: Update package repository
   apt:
     update_cache: true
@@ -27,15 +19,10 @@
     - "{{ python.version }}-dev"
     - "{{ python.version }}-venv"
     - "{{ python.version }}-pip"
+    - "{{ python.version }}-psycopg2"
+    - python-pycryptopp
     - git
     - git-flow
     - redis-server
     - uwsgi
     - gettext
-
-
-- name: Create uWSGI configuration file
-  template:
-    src: uwsgi.j2
-    dest: /etc/uwsgi/apps-enabled/{{ project.name }}
-  notify: restart uwsgi

@@ -1,0 +1,11 @@
+---
+
+- name: Create "{{ host.user }}" user
+  user:
+    name: "{{ host_user.name }}"
+    password: "{{ host_user.password }}"
+    shell: /bin/bash
+    groups: sudo
+    append: true
+    #generate_ssh_key: true
+    state: present

@@ -1,6 +1,6 @@
 server {
         listen {{ host.port }};
-        server_name {{ host.name }};
+        server_name {{ host.domain }} {{ ansible_eth0.ipv4.address }};
         access_log /var/log/nginx/{{ project.name }}-access.log;
         error_log /var/log/nginx/{{ project.name }}-error.log;
         charset utf-8;

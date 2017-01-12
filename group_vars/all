@@ -1,14 +1,14 @@
 host:
-  name: localhost
+  domain: prostoria.hr
   port: 80
-  user: bvujicic
+  user: test_deploy
 
 project:
-  name: test_ansible
+  name: prostoria
   repository: git@gitlab.com:broj42/prostoria.git
-  path: "/home/{{ host.user}}/test_ansible"
-  env_path: "/home/{{ host.user}}/.env/test_ansible"
-  reqs_path: "/home/{{ host.user}}/test_ansible/reqs/base"
+  path: "/home/{{ host.user}}/prostoria"
+  env_path: "/home/{{ host.user}}/.env/prostoria"
+  reqs_path: "/home/{{ host.user}}/prostoria/reqs/base"
 
 
 django:

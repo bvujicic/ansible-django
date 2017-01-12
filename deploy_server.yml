@@ -1,0 +1,13 @@
+---
+
+- name: Setup server
+  hosts: webservers
+  become: true
+
+  roles:
+    - ubuntu-apt
+    - ubuntu-user
+    - nginx
+    - uwsgi
+    - postgres
+    - django
