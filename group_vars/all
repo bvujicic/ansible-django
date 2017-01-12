@@ -3,6 +3,7 @@ host:
   port: 80
   user: test_deploy
 
+
 project:
   name: prostoria
   repository: git@gitlab.com:broj42/prostoria.git
@@ -12,13 +13,14 @@ project:
 
 
 django:
-  settings_template: "{{ project.path }}/prostoria/local_settings.py"
+  settings_template: "{{ project.path }}/{{ project.name }}/local_settings.py"
 
 
 python:
   version: python3
 
-db:
+
+database:
   name: test
   owner: test
   password: test

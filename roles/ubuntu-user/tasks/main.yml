@@ -2,8 +2,8 @@
 
 - name: Create "{{ host.user }}" user
   user:
-    name: "{{ host_user.name }}"
-    password: "{{ host_user.password }}"
+    name: "{{ host.user }}"
+    password: "{{ password }}"
     shell: /bin/bash
     groups: sudo
     append: true

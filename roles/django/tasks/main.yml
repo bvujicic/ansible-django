@@ -1,15 +1,14 @@
 ---
 
-#- name: Clone "{{ project.repository }}" repository to "{{ project.path }}"
-#  become: true
-#  #become_user: "{{ host.user }}"
-#  git:
-#    repo: "{{ project.repository }}"
-#    dest: "{{ project.path }}"
-#    accept_hostkey: true
-#    version: develop
-#    force: true
-#
+- name: Clone "{{ project.repository }}" repository to "{{ project.path }}"
+  #become_user: "{{ host.user }}"
+  git:
+    repo: "{{ project.repository }}"
+    dest: "{{ project.path }}"
+    accept_hostkey: true
+    version: develop
+    force: true
+
 
 #- name: Upgrade pip
 #  become: true
@@ -21,14 +20,19 @@
 #      - setuptools
 #
 
-- name: Install virtual environment requirements to "{{ project.env_path }}"
-  become: true
-  pip:
-    virtualenv: "{{ project.env_path }}"
-    requirements: "{{ project.reqs_path }}"
-    executable: pip3.5
-    #virtualenv_command: "{{ python.version }} -m venv"
-    virtualenv_python: "{{ python.version }}"
+- name: Install virtual environment "{{ project.env_path }}"
+  command: "{{ python.version }} -m venv {{ project.env_path }}"
+
+
+- name: Install requirements to "{{ project.env_path }}"
+  command: "pip install -r {{ project.reqs_path }}"
+#  become: true
+#  pip:
+#    virtualenv: "{{ project.env_path }}"
+#    requirements: "{{ project.reqs_path }}"
+##    #virtualenv_command: "{{ python.version }} -m venv"
+#    virtualenv_python: "{{ python.version }}"
+#    virtualen
 
 
 - name: Expand local settings

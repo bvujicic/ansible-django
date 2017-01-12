@@ -6,9 +6,9 @@
   become: true
 
   roles:
-    - ubuntu-apt
+#    - ubuntu-apt
     - ubuntu-user
-    - uwsgi
-    - nginx
+#    - uwsgi
+#    - nginx
 #    - postgres
-#    - django
+    - django

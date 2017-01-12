@@ -19,9 +19,9 @@ MIDDLEWARE_CLASSES += [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': '{{ db.name }}',
-        'USER': '{{ db.owner }}',
-        'PASSWORD': '{{ db.password }}',
+        'NAME': '{{ database.name }}',
+        'USER': '{{ database.owner }}',
+        'PASSWORD': '{{ database.password }}',
         'HOST': 'localhost',
         'PORT': '5432'
     }
