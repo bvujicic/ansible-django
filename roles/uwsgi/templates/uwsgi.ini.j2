@@ -1,6 +1,6 @@
 [uwsgi]
-virtualenv = /home/{{ host.user }}/Envs/{{ project.name }}
-chdir = /home/{{ host.user }}/{{ project.name }}
+virtualenv = {{ project.env.path }}
+chdir = {{ project.path }}
 wsgi-file = {{ project.name }}/wsgi.py
 
 processes = 2
@@ -17,5 +17,5 @@ plugin = python3
 
 vacuum = true
 
-logto = /home/{{ host.user }}/{{ project.name }}/log/uwsgi-{{ project.name }}.log
+logto = /home/{{ host.user }}/{{ project.name }}/log/{{ project.name }}.log
 touch-reload = /etc/uwsgi/apps-enabled/{{ project.name }}

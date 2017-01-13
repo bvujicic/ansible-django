@@ -1,6 +1,7 @@
 ---
 
 - name: Create "{{ host.user }}" user
+  become: true
   user:
     name: "{{ host.user }}"
     password: "{{ password }}"

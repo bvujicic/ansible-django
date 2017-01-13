@@ -34,7 +34,7 @@
     name: "{{ database.name }}"
     owner: "{{ database.owner }}"
     encoding: UTF-8
-    lc_collate: hr_HR.UTF-8
-    lc_ctype: hr_HR.UTF-8
+#    lc_collate: hr_HR.UTF-8
+#    lc_ctype: hr_HR.UTF-8
     template: template0
     state: present

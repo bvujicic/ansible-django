@@ -1,3 +1,7 @@
+upstream {{ project.name }} {
+        server unix:///home/{{ host.user }}/{{ project.name }}/uwsgi.socket;
+}
+
 server {
         listen {{ host.port }};
         server_name {{ host.domain }} {{ ansible_eth0.ipv4.address }};
@@ -8,7 +12,7 @@ server {
         client_max_body_size 75M;
 
         location /static/ {
-                alias /home/{{ host.user }}/static/;
+                alias /home/{{ host.user }}/static;
                 expires 10d;
                 autoindex off;
         }
@@ -18,9 +22,11 @@ server {
         }
 
         location / {
-                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                 proxy_set_header Host $http_host;
-                 proxy_redirect off;
-                 proxy_pass http://127.0.0.1:8000;
+                uwsgi_pass {{ project.name }};
+                include uwsgi_params;
         }
+
+        location /favicon.ico {
+                alias /home/{{ host.user }}/static/favicon.ico;
+         }
 }

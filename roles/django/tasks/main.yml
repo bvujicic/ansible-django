@@ -1,38 +1,37 @@
 ---
 
-- name: Clone "{{ project.repository }}" repository to "{{ project.path }}"
-  #become_user: "{{ host.user }}"
+
+- name: Clone "{{ project.repo.url }}" repository to "{{ project.path }}"
   git:
-    repo: "{{ project.repository }}"
+    repo: "{{ project.repo.url }}"
     dest: "{{ project.path }}"
     accept_hostkey: true
-    version: develop
-    force: true
+    version: "{{ project.repo.branch }}"
 
 
-#- name: Upgrade pip
-#  become: true
-#  pip:
-#    extra_args: --upgrade
-#    executable: pip3.5
-#    name:
-#      - pip
-#      - setuptools
-#
-
-- name: Install virtual environment "{{ project.env_path }}"
-  command: "{{ python.version }} -m venv {{ project.env_path }}"
+- name: Change git config to ignore file mode change
+  git_config:
+    name: core.filemode
+    scope: local
+    repo: "{{ project.path }}"
+    value: false
 
 
-- name: Install requirements to "{{ project.env_path }}"
-  command: "pip install -r {{ project.reqs_path }}"
-#  become: true
-#  pip:
-#    virtualenv: "{{ project.env_path }}"
-#    requirements: "{{ project.reqs_path }}"
-##    #virtualenv_command: "{{ python.version }} -m venv"
-#    virtualenv_python: "{{ python.version }}"
-#    virtualen
+- name: Upgrade pip
+  pip:
+    extra_args: --upgrade
+    name:
+      - pip
+      - setuptools
+
+
+- name: Install requirements to "{{ project.env.path }}"
+  pip:
+    virtualenv: "{{ project.env.path }}"
+    requirements: "{{ project.reqs_path }}"
+    virtualenv_command: "{{ python.version }}"
+    extra_args: "-m venv {{ project.name }}"
+    #executable: pip
 
 
 - name: Expand local settings
@@ -52,8 +51,22 @@
     - media
 
 
+- name: Set permissions
+  file:
+    dest: "/home/{{ host.user }}"
+    owner: "{{ host.user }}"
+    group: "{{ host.user }}"
+    mode: 0775
+    recurse: true
+
+
 - name: Migrate the database
-  django_manage:
-    app_path: "{{ project.path }}"
-    command: migrate
-    virtualenv: "{{ project.env_path }}"
+  become: true
+  become_user: "{{ host.user }}"
+  command: "{{ project.env.python }} {{ project.path }}/manage.py migrate"
+
+
+#- name: Collect static files
+#  become: true
+#  become_user: "{{ host.user }}"
+#  command: "{{ project.env_path}}/bin/{{ python.version}} {{ project.path }}/manage.py collectstatic"

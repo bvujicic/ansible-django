@@ -6,10 +6,15 @@ host:
 
 project:
   name: prostoria
-  repository: git@gitlab.com:broj42/prostoria.git
   path: "/home/{{ host.user}}/prostoria"
-  env_path: "/home/{{ host.user}}/.env/prostoria"
   reqs_path: "/home/{{ host.user}}/prostoria/reqs/base"
+  repo:
+    url: git@gitlab.com:broj42/prostoria.git
+    branch: develop
+  env:
+    path: "/home/{{ host.user}}/.env/prostoria"
+    python: "/home/{{ host.user}}/.env/prostoria/bin/python"
+
 
 
 django:

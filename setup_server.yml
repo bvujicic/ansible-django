@@ -3,12 +3,11 @@
 - name: Provision web server
   hosts: webservers
   user: "{{ host.user }}"
-  become: true
 
   roles:
 #    - ubuntu-apt
-    - ubuntu-user
-#    - uwsgi
-#    - nginx
+#    - ubuntu-user
 #    - postgres
     - django
+#    - nginx
+#    - uwsgi
