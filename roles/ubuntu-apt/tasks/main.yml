@@ -17,9 +17,10 @@
     - "{{ python.version }}-pil"
     - "{{ python.version }}-setuptools"
     - "{{ python.version }}-dev"
-    - "{{ python.version }}-venv"
+    - "{{ python.version }}-virtualenv"
     - "{{ python.version }}-pip"
     - "{{ python.version }}-psycopg2"
+    - virtualenv
     - screen
     - python-pycryptopp
     - git

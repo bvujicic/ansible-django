@@ -8,9 +8,9 @@ thread = 1
 master = true
 
 socket = /home/{{ host.user }}/{{ project.name }}/uwsgi.socket
-chmod-socket = 666
-uid = {{ host.user }}
-gid = {{ host.user }}
+chmod-socket = 777
+uid = root
+gid = root
 
 procname = {{ project.name }}
 plugin = python3

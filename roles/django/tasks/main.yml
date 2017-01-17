@@ -29,8 +29,8 @@
   pip:
     virtualenv: "{{ project.env.path }}"
     requirements: "{{ project.reqs_path }}"
-    virtualenv_command: "{{ python.version }}"
-    extra_args: "-m venv {{ project.name }}"
+#    virtualenv_command: "{{ python.version }}"
+#    extra_args: "-m venv {{ project.name }}"
     #executable: pip
 
 
@@ -69,4 +69,7 @@
 #- name: Collect static files
 #  become: true
 #  become_user: "{{ host.user }}"
-#  command: "{{ project.env_path}}/bin/{{ python.version}} {{ project.path }}/manage.py collectstatic"
+#  expect:
+#    command: "{{ project.env.python }} {{ project.path }}/manage.py collectstatic"
+#    responses:
+#
