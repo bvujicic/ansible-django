@@ -12,13 +12,13 @@ server {
         client_max_body_size 75M;
 
         location /static/ {
-                alias /home/{{ host.user }}/static;
+                alias /home/{{ host.user }}/static/;
                 expires 10d;
                 autoindex off;
         }
 
         location /media/ {
-                root /home/{{ host.user }}/{{ project.name }};
+                root /home/{{ host.user }}/{{ project.name }}/;
         }
 
         location / {

@@ -13,14 +13,14 @@
     state: present
 
   with_items:
-    - nginx
+    - supervisor
 
 
-- name: Create Nginx configuration file
+- name: Create Supervisor configuration file
+  become: true
   template:
-    src: nginx.j2
-    dest: /etc/nginx/sites-enabled/{{ project.name }}
+    src: supervisor.j2
+    dest: /etc/supervisor/conf.d/supervisor.conf
 
   notify:
-    - restart nginx
-    - restart uwsgi
+    - restart supervisor

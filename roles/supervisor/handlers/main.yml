@@ -1,0 +1,8 @@
+---
+
+- name: restart supervisor
+  become: true
+  supervisorctl:
+    name: uwsgi
+    config: /etc/supervisor/conf.d/supervisor.conf
+    state: restarted

@@ -1,19 +1,20 @@
 ---
 
-#- name: Update package repository
-#  apt:
-#    update_cache: true
-#    cache_valid_time: 3600
-#
-#
-#- name: Install system packages
-#  apt:
-#    name: "{{ item }}"
-#    install_recommends: true
-#    state: present
-#
-#  with_items:
-#    - uwsgi
+- name: Update package repository
+  apt:
+    update_cache: true
+    cache_valid_time: 3600
+
+
+- name: Install system packages
+  apt:
+    name: "{{ item }}"
+    install_recommends: true
+    state: present
+
+  with_items:
+    - uwsgi
+    - uwsgi-plugin-python3
 
 
 - name: Create uWSGI configuration file

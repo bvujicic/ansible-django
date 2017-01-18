@@ -1,6 +1,6 @@
 ---
 
-- name: Provision web server
+- name: Setup web server
   hosts: webservers
   user: "{{ host.user }}"
 
@@ -9,5 +9,6 @@
 #    - ubuntu-user
 #    - postgres
 #    - django
-    - nginx
-    - uwsgi
+#    - nginx
+#    - uwsgi
+    - supervisor
