@@ -7,15 +7,15 @@ processes = 2
 thread = 1
 master = true
 
-socket = /home/{{ host.user }}/{{ project.name }}/uwsgi.socket
+socket = {{ host.home }}/{{ project.name }}/uwsgi.socket
 chmod-socket = 777
 uid = root
 gid = root
 
 procname = {{ project.name }}
-plugin = python3
+plugin = {{ python.version }}
 
 vacuum = true
 
-logto = /home/{{ host.user }}/{{ project.name }}/log/{{ project.name }}.log
-touch-reload = /etc/uwsgi/apps-enabled/{{ project.name }}
+logto = {{ host.home }}/log/uwsgi.log
+#touch-reload = /etc/uwsgi/apps-enabled/{{ project.name }}

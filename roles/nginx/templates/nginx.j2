@@ -1,24 +1,24 @@
 upstream {{ project.name }} {
-        server unix:///home/{{ host.user }}/{{ project.name }}/uwsgi.socket;
+        server unix://{{ host.home }}/{{ project.name }}/uwsgi.socket;
 }
 
 server {
         listen {{ host.port }};
         server_name {{ host.domain }} {{ ansible_eth0.ipv4.address }};
-        access_log /var/log/nginx/{{ project.name }}-access.log;
-        error_log /var/log/nginx/{{ project.name }}-error.log;
+        access_log {{ host.home }}/log/nginx-access.log;
+        error_log {{ host.home }}/log/nginx-error.log;
         charset utf-8;
 
         client_max_body_size 75M;
 
         location /static/ {
-                alias /home/{{ host.user }}/static/;
+                alias {{ host.home }}/static/;
                 expires 10d;
                 autoindex off;
         }
 
         location /media/ {
-                root /home/{{ host.user }}/{{ project.name }}/;
+                root {{ host.home }}/{{ project.name }}/;
         }
 
         location / {
@@ -27,6 +27,6 @@ server {
         }
 
         location /favicon.ico {
-                alias /home/{{ host.user }}/static/favicon.ico;
+                alias {{ host.home }}/static/favicon.ico;
          }
 }

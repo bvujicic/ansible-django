@@ -53,7 +53,7 @@
 
 - name: Set permissions
   file:
-    dest: "/home/{{ host.user }}"
+    dest: "{{ host.home }}"
     owner: "{{ host.user }}"
     group: "{{ host.user }}"
     mode: 0775

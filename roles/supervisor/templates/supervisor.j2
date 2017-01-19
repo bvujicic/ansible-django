@@ -2,8 +2,8 @@
 
 [unix_http_server]
 file=/var/run/supervisor.sock   ; (the path to the socket file)
-chmod=0776                       ; sockef file mode (default 0700)
-; chown=root:supervisor
+chmod=0777                       ; sockef file mode (default 0700)
+chown=root
 
 [supervisord]
 logfile=/var/log/supervisor/supervisord.log ; (main log file;default $CWD/supervisord.log)
@@ -38,8 +38,8 @@ password={{ password }}
 
 command=/usr/bin/uwsgi --emperor /etc/uwsgi/apps-enabled/{{ project.name }}.ini
 redirect_stderr=true
-stdout_logfile=/home/{{ host.user }}/supervisor.log
-user={{ host.user }}
+stdout_logfile={{ host.home }}/log/supervisor.log
 autostart=true
 autorestart=true
+startsecs=3
 stopsignal=QUIT

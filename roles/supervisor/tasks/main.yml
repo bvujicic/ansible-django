@@ -20,7 +20,7 @@
   become: true
   template:
     src: supervisor.j2
-    dest: /etc/supervisor/conf.d/supervisor.conf
+    dest: /etc/supervisor/supervisord.conf
 
-#  notify:
-#    - restart supervisor
+  notify:
+    - restart supervisor

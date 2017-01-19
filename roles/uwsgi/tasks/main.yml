@@ -14,12 +14,19 @@
 
   with_items:
     - uwsgi
-    - uwsgi-plugin-python3
+    - uwsgi-plugin-{{ python.version }}
 
 
 - name: Create uWSGI configuration file
   template:
     src: uwsgi.ini.j2
-    dest: /etc/uwsgi/apps-enabled/{{ project.name }}.ini
+    dest: "{{ host.home }}/conf/uwsgi.ini"
+
+- name: Create uWSGI symlink
+  file:
+    path: /etc/uwsgi/apps-enabled/{{ project.name }}.ini
+    src: "{{ host.home }}/conf/uwsgi.ini"
+    force: true
+    state: link
 
   notify: restart uwsgi

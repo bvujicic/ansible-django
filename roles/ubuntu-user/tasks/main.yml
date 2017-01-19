@@ -4,9 +4,23 @@
   become: true
   user:
     name: "{{ host.user }}"
+    home: "{{ host.home }}"
     password: "{{ password }}"
+    update_password: always
     shell: /bin/bash
     groups: sudo
     append: true
     #generate_ssh_key: true
     state: present
+
+
+- name: Create directories
+  file:
+    path: "{{ host.home }}/{{ item }}"
+    state: directory
+    mode: 0755
+
+  with_items:
+    - log
+    - static
+    - conf
