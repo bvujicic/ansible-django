@@ -8,9 +8,10 @@ thread = 1
 master = true
 
 socket = {{ host.home }}/{{ project.name }}/uwsgi.socket
+chown-socket = {{ host.user }}
 chmod-socket = 777
-uid = root
-gid = root
+uid = {{ host.user }}
+gid = {{ host.user }}
 
 procname = {{ project.name }}
 plugin = {{ python.version }}
@@ -18,4 +19,5 @@ plugin = {{ python.version }}
 vacuum = true
 
 logto = {{ host.home }}/log/uwsgi.log
+logfile-chmod = 644
 #touch-reload = /etc/uwsgi/apps-enabled/{{ project.name }}
