@@ -5,10 +5,10 @@
   user: "{{ host.user }}"
 
   roles:
-#    - ubuntu-apt
-#    - ubuntu-user
-#    - postgres
-#    - django
-#    - nginx
-#    - uwsgi
+    - ubuntu-apt
+    - ubuntu-user
+    - postgres
+    - django
+    - nginx
+    - uwsgi
     - supervisor
