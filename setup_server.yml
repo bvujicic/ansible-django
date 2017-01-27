@@ -9,6 +9,6 @@
 #    - ubuntu-user
 #    - postgres
 #    - django
-#    - nginx
-    - uwsgi
-    - supervisor
+    - nginx
+#    - uwsgi
+#    - supervisor

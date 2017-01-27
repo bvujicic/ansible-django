@@ -4,8 +4,12 @@ git: git@gitlab.com:broj42/prostoria.git
 
 
 host:
-  domain: prostoria.hr
-  port: 80
+  domain:
+    - prostoria.hr
+    - www.prostoria.hr
+  port:
+    http: 80
+    https: 443
   user: "{{ user }}"
   home: "/home/{{ user }}"
 
