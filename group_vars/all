@@ -1,12 +1,13 @@
 project_name: prostoria
 user: test_deploy
 git: git@gitlab.com:broj42/prostoria.git
+domain: prostoria.hr
 
 
 host:
   domain:
-    - prostoria.hr
-    - www.prostoria.hr
+    - "{{ domain }}"
+    - "www.{{ domain }}"
   port:
     http: 80
     https: 443
@@ -22,8 +23,8 @@ project:
     url: "{{ git }}"
     branch: develop
   env:
-    path: "/home/{{ host.user}}/.env/prostoria"
-    python: "/home/{{ host.user}}/.env/prostoria/bin/python"
+    path: "/home/{{ host.user}}/.env/{{ project_name }}/"
+    python: "/home/{{ host.user}}/.env/{{ project_name }}/bin/python"
 
 
 
