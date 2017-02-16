@@ -9,6 +9,7 @@
 #    - ubuntu-user
 #    - postgres
 #    - django
+    - letsencrypt
     - nginx
 #    - uwsgi
 #    - supervisor

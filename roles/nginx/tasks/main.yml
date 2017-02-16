@@ -1,19 +1,24 @@
 ---
 
-#- name: Update package repository
-#  apt:
-#    update_cache: true
-#    cache_valid_time: 3600
-#
-#
-#- name: Install system packages
-#  apt:
-#    name: "{{ item }}"
-#    install_recommends: true
-#    state: present
-#
-#  with_items:
-#    - nginx
+- name: Update package repository
+  apt:
+    update_cache: true
+    cache_valid_time: 3600
+
+
+- name: Install system packages
+  apt:
+    name: "{{ item }}"
+    install_recommends: true
+    state: present
+
+  with_items:
+    - nginx
+
+
+- name: Generate Diffie-Hellman params
+  become: true
+  command: openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
 
 
 - name: Create Nginx configuration file

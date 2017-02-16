@@ -2,6 +2,7 @@ project_name: prostoria
 user: test_deploy
 git: git@gitlab.com:broj42/prostoria.git
 domain: prostoria.hr
+email: boris.vujicic@broj42.com
 
 
 host:
@@ -15,6 +16,10 @@ host:
   home: "/home/{{ user }}"
 
 
+letsencrypt:
+  email: "{{ email }}"
+
+
 project:
   name: "{{ project_name }}"
   path: "{{ host.home }}/{{ project_name }}"
@@ -25,7 +30,6 @@ project:
   env:
     path: "/home/{{ host.user}}/.env/{{ project_name }}/"
     python: "/home/{{ host.user}}/.env/{{ project_name }}/bin/python"
-
 
 
 django:
