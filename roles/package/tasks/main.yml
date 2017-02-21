@@ -1,12 +1,5 @@
 ---
 
-#- name: Update package repository
-#  become: true
-#  package:
-#    update_cache: true
-#    cache_valid_time: 3600
-
-
 - name: SYSTEM | Install global packages
   package:
     name: "{{ item }}"

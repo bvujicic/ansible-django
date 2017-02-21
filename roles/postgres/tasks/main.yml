@@ -1,14 +1,7 @@
 ---
 
-#- name: Update package repository
-#  become: true
-#  apt:
-#    update_cache: true
-#    cache_valid_time: 3600
-
-
 - name: POSTGRESQL | Install system packages
-  apt:
+  package:
     name: "{{ item }}"
     install_recommends: true
     update_cache: true

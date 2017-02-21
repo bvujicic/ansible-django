@@ -21,7 +21,7 @@
   notify: restart uwsgi
 
 
-- name: Create uWSGI symlink
+- name: UWSGI | Create uWSGI symlink
   file:
     path: /etc/uwsgi/apps-enabled/{{ project.name }}.ini
     src: "{{ host.home }}conf/uwsgi.ini"

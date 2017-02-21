@@ -1,20 +1,11 @@
 ---
 
-
 - name: GIT | Clone "{{ project.repo.url }}" repository to {{ project.path }}
   git:
     repo: "{{ project.repo.url }}"
     dest: "{{ project.path }}"
     accept_hostkey: true
     version: "{{ project.repo.branch }}"
-
-
-#- name: Change git config to ignore file mode change
-#  git_config:
-#    name: core.filemode
-#    scope: local
-#    repo: "{{ project.path }}"
-#    value: false
 
 
 #- name: Upgrade pip
@@ -32,9 +23,7 @@
     virtualenv: "{{ project.env.path }}"
     virtualenv_python: "{{ python.version }}"
     requirements: "{{ project.reqs_path }}"
-#    virtualenv_command: "{{ python.version }}"
-#    extra_args: "-m venv {{ project.name }}"
-    #executable: "{{ python.version }}"
+
   notify: restart uwsgi
 
 #

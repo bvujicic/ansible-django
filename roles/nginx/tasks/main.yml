@@ -1,6 +1,6 @@
 ---
 
-- name: Install system packages
+- name: NGINX | Install system packages
   package:
     name: "{{ item }}"
     install_recommends: true
@@ -17,14 +17,13 @@
 #  command: openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
 
 
-- name: Create Nginx configuration file
+- name: NGINX | Create Nginx configuration file
   template:
     src: nginx.j2
     dest: "{{ host.home }}conf/nginx.conf"
-    #dest: /etc/nginx/sites-enabled/{{ project.name }}
 
 
-- name: Create Nginx symlink
+- name: NGINX | Create Nginx symlink
   file:
     path: /etc/nginx/sites-enabled/{{ project.name }}.conf
     src: "{{ host.home }}conf/nginx.conf"
