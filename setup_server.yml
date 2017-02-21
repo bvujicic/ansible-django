@@ -1,15 +1,18 @@
 ---
 
 - name: Setup web server
-  hosts: webservers
-  user: "{{ host.user }}"
+  hosts: all
+  user: root
+  vars_files:
+    - group_vars/external/{{ project_name }}.yml
+
 
   roles:
-#    - ubuntu-apt
-#    - ubuntu-user
+#    - package
+    - user
 #    - postgres
-#    - django
-    - letsencrypt
+    - django
+#    - letsencrypt
     - nginx
-#    - uwsgi
-#    - supervisor
+    - uwsgi
+    - supervisor

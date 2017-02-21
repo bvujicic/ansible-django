@@ -36,10 +36,10 @@ password={{ password }}
 
 [program:uwsgi]
 
-command=/usr/bin/uwsgi --master --emperor /etc/uwsgi/apps-enabled/{{ project.name }}.ini
+command=/usr/bin/uwsgi --emperor /etc/uwsgi/apps-enabled/{{ project.name }}.ini
 user={{ host.user }}
 redirect_stderr=true
-stdout_logfile={{ host.home }}/log/supervisor.log
+stdout_logfile={{ host.home }}log/supervisor.log
 autostart=true
 autorestart=unexpected
 startsecs=1

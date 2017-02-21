@@ -1,0 +1,47 @@
+
+# Include host specific variables
+
+admin:
+  name: "{{ admin_name }}"
+  email: "{{ admin_email }}"
+
+
+host:
+  domain:
+    - "{{ domain }}"
+    - "www.{{ domain }}"
+  port:
+    http: 80
+    https: 443
+  user: "{{ linux_user }}"
+  home: "/home/{{ linux_user }}/"
+
+
+letsencrypt:
+  email: "{{ email }}"
+
+
+project:
+  name: "{{ project_name }}"
+  path: "{{ host.home }}{{ project_name }}/"
+  reqs_path: "{{ host.home }}{{ project_name }}/{{ requirements_file }}"
+  repo:
+    url: "{{ git_repo }}"
+    branch: develop
+  env:
+    path: "/home/{{ host.user}}/.env/{{ project_name }}/"
+    python: "/home/{{ host.user}}/.env/{{ project_name }}/bin/python"
+
+
+django:
+  settings_dir: "{{ project.path }}{{ project_name }}/"
+
+
+python:
+  version: python3
+
+
+database:
+  name: "{{ database_name }}"
+  owner: "{{ database_owner }}"
+  password: "{{ database_password }}"

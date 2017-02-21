@@ -1,25 +1,29 @@
 ---
 
-- name: Update package repository
-  apt:
-    update_cache: true
-    cache_valid_time: 3600
+#- name: Update package repository
+#  become: true
+#  apt:
+#    update_cache: true
+#    cache_valid_time: 3600
 
 
-- name: Install system packages
+- name: POSTGRESQL | Install system packages
   apt:
     name: "{{ item }}"
     install_recommends: true
+    update_cache: true
+    cache_valid_time: 3600
     state: present
 
   with_items:
     - postgresql
     - postgresql-server-dev-all
+    - libpq-dev
     - python-psycopg2
 
 
-- name: Create PostgreSQL user '{{ database.owner }}'
-  become: yes
+- name: POSTGRESQL | Create PostgreSQL user '{{ database.owner }}'
+  become: true
   become_user: postgres
   postgresql_user:
     name: "{{ database.name }}"
@@ -27,8 +31,8 @@
     state: present
 
 
-- name: Create PostgreSQL database '{{ database.name }}' with owner '{{ database.owner }}'
-  become: yes
+- name: POSTGRESQL | Create PostgreSQL database '{{ database.name }}' with owner '{{ database.owner }}'
+  become: true
   become_user: postgres
   postgresql_db:
     name: "{{ database.name }}"

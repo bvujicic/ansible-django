@@ -1,6 +1,6 @@
 ---
 
-- name: Create "{{ host.user }}" user
+- name: SYSTEM | Create "{{ host.user }}" user with {{ host.home }} home and add to sudo group.
   become: true
   user:
     name: "{{ host.user }}"
@@ -14,11 +14,12 @@
     state: present
 
 
-- name: Create directories
+- name: SYSTEM | Create local directories
   file:
-    path: "{{ host.home }}/{{ item }}"
+    path: "{{ host.home }}{{ item }}"
     state: directory
-    mode: 0755
+    owner: "{{ host.user }}"
+    group: "{{ host.user }}"
 
   with_items:
     - log

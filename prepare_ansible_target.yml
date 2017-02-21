@@ -1,0 +1,18 @@
+# This playbook prepares the target host for work with Ansible by making sure Python is installed and
+# public SSH key is copied to authorized_keys
+
+- name: Prepare Ansible target
+  gather_facts: false
+  hosts: all
+  user: root
+  become: true
+
+  tasks:
+  - name: Install Python 2
+    raw: test -e /usr/bin/python || (apt update && apt install -y python)
+
+  - name: Copy local SSH public key to remote ~/.ssh/authorized_keys
+    authorized_key:
+      user: root
+      exclusive: false
+      key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"

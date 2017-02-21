@@ -1,50 +1,52 @@
 upstream {{ project.name }} {
-        server unix://{{ host.home }}/{{ project.name }}/uwsgi.socket;
+        server unix://{{ host.home }}{{ project.name }}/uwsgi.socket;
 }
+
+#server {
+#        listen {{ host.port.http }};
+#        server_name {{ host.domain }} {{ ansible_eth0.ipv4.address }};
+#        return 301 https://$host$request_uri;
+#}
 
 server {
         listen {{ host.port.http }};
-        server_name {{ host.domain }};
-        return 301 https://$host$request_uri;
-}
-
-server {
-        listen {{ host.port.https }};
         server_name {{ host.domain }} {{ ansible_eth0.ipv4.address }};
-        access_log {{ host.home }}/log/nginx-access.log;
-        error_log {{ host.home }}/log/nginx-error.log;
+        access_log {{ host.home }}log/nginx-access.log;
+        error_log {{ host.home }}log/nginx-error.log;
         charset utf-8;
 
         client_max_body_size 75M;
 
-        ssl on;
-        ssl_certificate     /etc/ssl/live/{{ host.domain.1 }}/fullchain.pem;
-        ssl_certificate_key /etc/ssl/live/{{ host.domain.1 }}/privkey.pem;
-        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-        ssl_prefer_server_ciphers on;
-        ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:ECDHE-RSA-AES128-GCM-SHA256:AES256+EECDH:DHE-RSA-AES128-GCM-SHA256:AES256+EDH:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DES-CBC3-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!MD5:!PSK:!RC4";
+        #ssl on;
+        #ssl_certificate     /etc/ssl/live/{{ host.domain.1 }}/fullchain.pem;
+        #ssl_certificate_key /etc/ssl/live/{{ host.domain.1 }}/privkey.pem;
+        #ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+        #ssl_prefer_server_ciphers on;
+        #ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:ECDHE-RSA-AES128-GCM-SHA256:AES256+EECDH:DHE-RSA-AES128-GCM-SHA256:AES256+EDH:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DES-CBC3-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!MD5:!PSK:!RC4";
 
-        ssl_session_cache shared:SSL:10m;
-        ssl_session_timeout 10m;
+        #ssl_session_cache shared:SSL:10m;
+        #ssl_session_timeout 10m;
 
-        ssl_dhparam /etc/ssl/certs/dhparam.pem;
+        #ssl_dhparam /etc/ssl/certs/dhparam.pem;
 
         # browser header doesn't allow HTTP access
         # add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
 
-        location ~ /.well-known {
-            allow all;
-            root {{ host.home }}/{{ project.name }}/;
-        }
+        #location ~ /.well-known {
+        #    allow all;
+        #    root {{ host.home }}{{ project.name }}/;
+        #}
 
         location /static/ {
-                alias {{ host.home }}/static/;
+                alias {{ host.home }}static/;
                 expires 10d;
                 autoindex off;
         }
 
         location /media/ {
-                root {{ host.home }}/{{ project.name }}/;
+                alias {{ host.home }}{{ project.name }}/media/;
+                expires 10d;
+                autoindex off;
         }
 
         location / {
@@ -53,6 +55,6 @@ server {
         }
 
         location /favicon.ico {
-                alias {{ host.home }}/static/favicon.ico;
+                alias {{ host.home }}static/favicon.ico;
         }
 }

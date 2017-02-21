@@ -1,0 +1,61 @@
+---
+
+#- name: Update package repository
+#  become: true
+#  package:
+#    update_cache: true
+#    cache_valid_time: 3600
+
+
+- name: SYSTEM | Install global packages
+  package:
+    name: "{{ item }}"
+    install_recommends: true
+    update_cache: true
+    cache_valid_time: 3600
+    state: present
+
+  with_items:
+    - build-essential
+    - virtualenv
+    - screen
+    - git
+    - git-flow
+    - redis-server
+    - gettext
+    - openssl
+    - libssl-dev
+    - libssl-doc
+
+
+- name: SYSTEM | Install Python 2 and Python 3 packages
+  package:
+    name: "{{ item }}"
+    install_recommends: true
+    update_cache: true
+    cache_valid_time: 3600
+    state: present
+
+  with_items:
+    - python
+    - python3
+    - python-dev
+    - python3-dev
+    - python-pip
+    - python3-pip
+    - ipython
+    - ipython3
+    - python-pil
+    - python3-pil
+    - python-setuptools
+    - python3-setuptools
+    - python-virtualenv
+    - python-psycopg2
+    - python-pycryptopp
+
+
+#- name: Install "hr_HR.UTF-8" locale
+##  locale_gen:
+##    name: hr_HR.UTF-8
+##    state: present
+#  shell: "locale-gen hr_HR.UTF-8; update-locale;"

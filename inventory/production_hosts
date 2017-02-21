@@ -1,0 +1,9 @@
+[localhost]
+localhost       ansible_connection=local
+
+[webservers]
+#139.162.183.47  ansible_user=root   ansible_python_interpreter=python3
+139.162.164.196  ansible_user=deploy
+
+[prostoria]
+139.162.183.47

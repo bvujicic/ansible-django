@@ -1,15 +1,11 @@
 ---
 
-- name: Update package repository
-  apt:
-    update_cache: true
-    cache_valid_time: 3600
-
-
-- name: Install system packages
-  apt:
+- name: UWSGI | Install system packages
+  package:
     name: "{{ item }}"
     install_recommends: true
+    update_cache: true
+    cache_valid_time: 3600
     state: present
 
   with_items:
@@ -17,15 +13,18 @@
     - uwsgi-plugin-{{ python.version }}
 
 
-- name: Create uWSGI configuration file
+- name: UWSGI | Create uWSGI configuration file
   template:
     src: uwsgi.ini.j2
-    dest: "{{ host.home }}/conf/uwsgi.ini"
+    dest: "{{ host.home }}conf/uwsgi.ini"
+
+  notify: restart uwsgi
+
 
 - name: Create uWSGI symlink
   file:
     path: /etc/uwsgi/apps-enabled/{{ project.name }}.ini
-    src: "{{ host.home }}/conf/uwsgi.ini"
+    src: "{{ host.home }}conf/uwsgi.ini"
     force: true
     state: link
 

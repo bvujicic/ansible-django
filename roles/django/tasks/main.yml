@@ -1,7 +1,7 @@
 ---
 
 
-- name: Clone "{{ project.repo.url }}" repository to "{{ project.path }}"
+- name: GIT | Clone "{{ project.repo.url }}" repository to {{ project.path }}
   git:
     repo: "{{ project.repo.url }}"
     dest: "{{ project.path }}"
@@ -9,42 +9,46 @@
     version: "{{ project.repo.branch }}"
 
 
-- name: Change git config to ignore file mode change
-  git_config:
-    name: core.filemode
-    scope: local
-    repo: "{{ project.path }}"
-    value: false
+#- name: Change git config to ignore file mode change
+#  git_config:
+#    name: core.filemode
+#    scope: local
+#    repo: "{{ project.path }}"
+#    value: false
 
 
-- name: Upgrade pip
-  pip:
-    extra_args: --upgrade
-    name:
-      - pip
-      - setuptools
+#- name: Upgrade pip
+#  pip:
+#    extra_args: --upgrade
+#    name:
+#      - pip
+#      - setuptools
 
 
 - name: Install requirements to "{{ project.env.path }}"
+  become: true
+  become_user: "{{ host.user }}"
   pip:
     virtualenv: "{{ project.env.path }}"
+    virtualenv_python: "{{ python.version }}"
     requirements: "{{ project.reqs_path }}"
 #    virtualenv_command: "{{ python.version }}"
 #    extra_args: "-m venv {{ project.name }}"
-    #executable: pip
+    #executable: "{{ python.version }}"
+  notify: restart uwsgi
 
-
-- name: Expand local settings
-  template:
-    src: local_settings.j2
-    dest: "{{ django.settings_template }}"
-
-
+#
+#- name: Expand local settings
+#  shell:
+#
+#    src: "{{ django.settings_dir }}local_settings.j2"
+#    dest: "{{ django.settings_dir }}local_settings.py"
+#
+#
 - name: Create local directories
   file:
-    path: "{{ project.path }}/{{ item }}"
+    path: "{{ project.path }}{{ item }}"
     state: directory
-    mode: 0755
 
   with_items:
     - log
@@ -56,14 +60,13 @@
     dest: "{{ host.home }}"
     owner: "{{ host.user }}"
     group: "{{ host.user }}"
-    mode: 0775
     recurse: true
 
 
-- name: Migrate the database
-  become: true
-  become_user: "{{ host.user }}"
-  command: "{{ project.env.python }} {{ project.path }}/manage.py migrate"
+#- name: Migrate the database
+#  become: true
+#  become_user: "{{ host.user }}"
+#  command: "{{ project.env.python }} {{ project.path }}manage.py migrate"
 
 
 #- name: Collect static files
