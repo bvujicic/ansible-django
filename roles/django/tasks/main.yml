@@ -1,20 +1,31 @@
 ---
 
 - name: GIT | Clone "{{ project.repo.url }}" repository to {{ project.path }}
+  become: true
   git:
     repo: "{{ project.repo.url }}"
     dest: "{{ project.path }}"
     accept_hostkey: true
     version: "{{ project.repo.branch }}"
 
+  notify: restart uwsgi
 
-#- name: Upgrade pip
-#  pip:
-#    extra_args: --upgrade
-#    name:
-#      - pip
-#      - setuptools
+- name: Create local directories
+  file:
+    path: "{{ project.path }}{{ item }}"
+    state: directory
 
+  with_items:
+    - log
+    - media
+    - config
+
+#- name: Set permissions
+#  file:
+#    dest: "{{ host.home }}"
+#    owner: "{{ host.user }}"
+#    group: "{{ host.user }}"
+#    recurse: true
 
 - name: Install requirements to "{{ project.env.path }}"
   become: true
@@ -26,22 +37,14 @@
 
   notify: restart uwsgi
 
-#
-#- name: Expand local settings
-#  shell:
-#
-#    src: "{{ django.settings_dir }}local_settings.j2"
-#    dest: "{{ django.settings_dir }}local_settings.py"
-#
-#
-- name: Create local directories
-  file:
-    path: "{{ project.path }}{{ item }}"
-    state: directory
+- name: Activate environment
+  shell: . {{ project.env.path }}bin/activate
 
-  with_items:
-    - log
-    - media
+
+- name: Copy YAML config file
+  template:
+    src: config.yml
+    dest: "{{ project.path }}config/config.yml"
 
 
 - name: Set permissions
@@ -52,16 +55,16 @@
     recurse: true
 
 
-#- name: Migrate the database
-#  become: true
-#  become_user: "{{ host.user }}"
-#  command: "{{ project.env.python }} {{ project.path }}manage.py migrate"
+- name: Migrate the database
+  #become: true
+  #become_user: "{{ host.user }}"
+  command: "{{ project.env.python }} {{ project.path }}manage.py migrate"
 
 
-#- name: Collect static files
-#  become: true
-#  become_user: "{{ host.user }}"
-#  expect:
-#    command: "{{ project.env.python }} {{ project.path }}/manage.py collectstatic"
-#    responses:
-#
+- name: Collect static files
+  #become: true
+  #become_user: "{{ host.user }}"
+  expect:
+    command: "{{ project.env.python }} {{ project.path }}/manage.py collectstatic"
+    responses:
+      'yes': 'yes'

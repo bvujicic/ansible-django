@@ -1,15 +1,11 @@
 ---
 
-- name: Update package repository
-  apt:
-    update_cache: true
-    cache_valid_time: 3600
-
-
 - name: Install system packages
-  apt:
+  package:
     name: "{{ item }}"
     install_recommends: true
+    update_cache: true
+    cache_valid_time: 3600
     state: present
 
   with_items:
@@ -25,12 +21,14 @@
 
 - name: Create Letsencrypt certificate
   become: true
-  shell: letsencrypt certonly -n --standalone --agree-tos -m {{ letsencrypt.email }} -d {{ host.domain.0 }} -d {{ host.domain.1 }}
+  shell: letsencrypt certonly -n --standalone --agree-tos -m {{ letsencrypt.email }} -d {{ item }}
   args:
-    creates: /etc/ssl/live/{{ domain.1 }}
+    creates: /etc/ssl/live/{{ item }}
 
-  notify:
-    - restart nginx
+  with_items: "{{ domains }}"
+
+#  notify:
+#    - restart nginx
 
 
 - name: Create Letsencrypt cronjob for automatic certificate renewal
@@ -38,4 +36,6 @@
   cron:
     name: letsencrypt_renewal
     special_time: weekly
-    job: letsencrypt --renew certonly -n --standalone --agree-tos -m {{ letsencrypt.email }} -d {{ host.domain.0 }} -d {{ host.domain.1 }} && service nginx reload
+    job: letsencrypt --renew certonly -n --standalone --agree-tos -m {{ letsencrypt.email }} -d {{ item }}
+
+  with_items: "{{ domains }}"

@@ -1,6 +1,16 @@
 ---
 
+- name: Check if Service Exists
+  stat: path=/etc/init.d/apache2
+  register: service_status
+
+- name: Stop Service
+  service: name=apache2 state=stopped
+  when: service_status.stat.exists
+  register: service_stopped
+
 - name: NGINX | Install system packages
+  become: true
   package:
     name: "{{ item }}"
     install_recommends: true

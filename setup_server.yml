@@ -1,18 +1,21 @@
 ---
 
 - name: Setup web server
-  hosts: all
+  hosts: webservers
   user: root
+#  vars_files:
+#    - group_vars/all.yml
   vars_files:
-    - group_vars/external/{{ project_name }}.yml
+    - group_vars/external/{{ env }}.yml
+    - group_vars/all.yml
 
 
   roles:
 #    - package
-    - user
+#    - user
 #    - postgres
-    - django
-#    - letsencrypt
-    - nginx
-    - uwsgi
-    - supervisor
+#    - nginx
+#    - django
+#    - uwsgi
+    - letsencrypt
+#    - supervisor

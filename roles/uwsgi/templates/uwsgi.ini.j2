@@ -1,5 +1,5 @@
 [uwsgi]
-#virtualenv = {{ project.env.path }}
+virtualenv = {{ project.env.path }}
 chdir = {{ project.path }}
 wsgi-file = {{ project.name }}/wsgi.py
 
@@ -9,7 +9,7 @@ master = true
 
 socket = {{ host.home }}{{ project.name }}/uwsgi.socket
 chown-socket = {{ host.user }}
-chmod-socket = 777
+chmod-socket = 666
 uid = {{ host.user }}
 gid = {{ host.user }}
 
@@ -18,6 +18,6 @@ plugin = {{ python.version }}
 
 vacuum = true
 
-logto = {{ host.home }}log/uwsgi.log
+logto2 = {{ host.home }}log/uwsgi.log
 logfile-chmod = 644
-#touch-reload = /etc/uwsgi/apps-enabled/{{ project.name }}
+touch-reload = /etc/uwsgi/apps-enabled/{{ project.name }}.ini

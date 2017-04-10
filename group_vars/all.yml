@@ -7,9 +7,7 @@ admin:
 
 
 host:
-  domain:
-    - "{{ domain }}"
-    - "www.{{ domain }}"
+  domain: "{{ domains }}"
   port:
     http: 80
     https: 443
@@ -18,7 +16,7 @@ host:
 
 
 letsencrypt:
-  email: "{{ email }}"
+  email: "{{ admin.email }}"
 
 
 project:
@@ -34,6 +32,7 @@ project:
 
 
 django:
+  secret_key: "{{ secret_key }}"
   settings_dir: "{{ project.path }}{{ project_name }}/"
 
 

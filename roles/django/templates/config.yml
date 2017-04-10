@@ -1,0 +1,41 @@
+---
+# copy this template as config.yml in the same folder and change your configuration values
+
+#django_debug: true
+
+# production only
+#django_allowed_hosts:
+#  - '139.162.138.55'
+
+django_secret_key: 'random_str'
+
+# comment this entire key to use sqlite3
+#django_database:
+#  backend: 'postgresql_psycopg2'
+#  name: 'db_name'
+#  user: 'db_user'
+#  password: 'db_pass'
+
+django_redis:
+  location: 'redis://localhost:6379/0'
+
+#django_log:
+#  path: '/path/to/log/'
+
+django_email:
+  backend: 'console' # 'console', 'smtp'
+  host: 'smtp.example.com'
+  host_user: 'user'
+  host_password: 'pass'
+
+django_admin:
+  name: 'Kathryn Janeway'
+  email: 'kathy@voyager.com'
+
+#django_static:
+#  root: '/path/to/somewhere/'
+
+django_cloudinary:
+  cloud_name: ''
+  api_key: ''
+  api_secret: ''

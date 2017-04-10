@@ -4,13 +4,13 @@ upstream {{ project.name }} {
 
 #server {
 #        listen {{ host.port.http }};
-#        server_name {{ host.domain }} {{ ansible_eth0.ipv4.address }};
+#        server_name {{ host.domain }};
 #        return 301 https://$host$request_uri;
 #}
 
 server {
         listen {{ host.port.http }};
-        server_name {{ host.domain }} {{ ansible_eth0.ipv4.address }};
+        server_name {{ domains }};
         access_log {{ host.home }}log/nginx-access.log;
         error_log {{ host.home }}log/nginx-error.log;
         charset utf-8;
