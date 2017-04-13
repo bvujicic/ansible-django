@@ -1,16 +1,16 @@
 upstream {{ project.name }} {
-        server unix://{{ host.home }}{{ project.name }}/uwsgi.socket;
+        server 127.0.0.1:8000;
 }
 
 #server {
 #        listen {{ host.port.http }};
-#        server_name {{ host.domain }};
+#        server_name {% for domain in domains %}{{ domain }} {% endfor %}{{ ansible_eth0.ipv4.address }};
 #        return 301 https://$host$request_uri;
 #}
 
 server {
         listen {{ host.port.http }};
-        server_name {{ domains }};
+        server_name {% for domain in domains %}{{ domain }} {% endfor %}{{ ansible_eth0.ipv4.address }};
         access_log {{ host.home }}log/nginx-access.log;
         error_log {{ host.home }}log/nginx-error.log;
         charset utf-8;
@@ -49,12 +49,18 @@ server {
                 autoindex off;
         }
 
-        location / {
-                uwsgi_pass {{ project.name }};
-                include uwsgi_params;
-        }
-
         location /favicon.ico {
                 alias {{ host.home }}static/favicon.ico;
+        }
+
+        location / {
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            # enable this if and only if you use HTTPS
+            # proxy_set_header X-Forwarded-Proto https;
+            proxy_set_header Host $http_host;
+            # we don't want nginx trying to do something clever with
+            # redirects, we set the Host: header above already.
+            proxy_redirect off;
+            proxy_pass http://{{ project_name }};
         }
 }

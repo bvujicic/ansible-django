@@ -1,0 +1,17 @@
+---
+
+- name: GUNICORN | Install Gunicorn to "{{ project.env.path }}"
+  become: true
+  become_user: "{{ host.user }}"
+  pip:
+    virtualenv: "{{ project.env.path }}"
+    virtualenv_python: "{{ python.version }}"
+    name: gunicorn
+
+- name: GUNICORN | Activate environment
+  shell: . {{ project.env.path }}bin/activate
+
+- name: GUNICORN | Create configuration file
+  template:
+    src: gunicorn.conf.j2
+    dest: "{{ host.home }}conf/gunicorn.conf.py"

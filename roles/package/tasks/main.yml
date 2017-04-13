@@ -1,5 +1,15 @@
 ---
 
+#- name: SYSTEM | Add Jenkins Repository
+#  become: true
+#  shell: sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list'
+#
+#
+#- name: SYSTEM | Add repository private key
+#  become: true
+#  shell: wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
+
+
 - name: SYSTEM | Install global packages
   package:
     name: "{{ item }}"
@@ -19,6 +29,7 @@
     - openssl
     - libssl-dev
     - libssl-doc
+    #- jenkins
 
 
 - name: SYSTEM | Install Python 2 and Python 3 packages

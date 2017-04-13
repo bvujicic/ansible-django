@@ -29,8 +29,11 @@
 
 - name: NGINX | Create Nginx configuration file
   template:
-    src: nginx.j2
+    src: nginx.conf.j2
     dest: "{{ host.home }}conf/nginx.conf"
+
+  notify:
+    - restart nginx
 
 
 - name: NGINX | Create Nginx symlink

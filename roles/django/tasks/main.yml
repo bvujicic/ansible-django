@@ -61,10 +61,10 @@
   command: "{{ project.env.python }} {{ project.path }}manage.py migrate"
 
 
-- name: Collect static files
-  #become: true
-  #become_user: "{{ host.user }}"
-  expect:
-    command: "{{ project.env.python }} {{ project.path }}/manage.py collectstatic"
-    responses:
-      'yes': 'yes'
+#- name: Collect static files
+#  #become: true
+#  #become_user: "{{ host.user }}"
+#  expect:
+#    command: "{{ project.env.python }} {{ project.path }}/manage.py collectstatic"
+#    responses:
+#      'yes': 'yes'
