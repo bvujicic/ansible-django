@@ -61,6 +61,7 @@
     virtualenv: "{{ project.env.path }}"
     app_path: "{{ project.path }}"
     command: migrate
+  when: skip_database is not defined
 
 
 - name: DJANGO | Collect static files
