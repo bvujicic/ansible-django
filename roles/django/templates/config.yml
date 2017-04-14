@@ -10,17 +10,19 @@
 django_secret_key: 'random_str'
 
 # comment this entire key to use sqlite3
-#django_database:
-#  backend: 'postgresql_psycopg2'
-#  name: 'db_name'
-#  user: 'db_user'
-#  password: 'db_pass'
+django_database:
+  backend: 'postgresql_psycopg2'
+  name: '{{ database.name }}'
+  user: '{{ database.owner }}'
+  password: '{{ database.password }}'
+  host: 'localhost'
+  port: '5432'
 
 django_redis:
   location: 'redis://localhost:6379/0'
 
-#django_log:
-#  path: '/path/to/log/'
+django_log:
+  path: '{{ project.path }}log'
 
 django_email:
   backend: 'console' # 'console', 'smtp'
@@ -29,11 +31,11 @@ django_email:
   host_password: 'pass'
 
 django_admin:
-  name: 'Kathryn Janeway'
-  email: 'kathy@voyager.com'
+  name: '{{ admin.name }}'
+  email: '{{ admin.email }}'
 
-#django_static:
-#  root: '/path/to/somewhere/'
+django_static:
+  root: '{{ host.home }}static'
 
 django_cloudinary:
   cloud_name: ''

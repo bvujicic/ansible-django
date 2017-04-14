@@ -1,12 +1,5 @@
 ---
 
-#- name: restart supervisor
-#  become: true
-#  supervisorctl:
-#    name: uwsgi
-#    config: /etc/supervisor/supervisord.conf
-#    state: restarted
-
 - name: restart supervisor
   become: true
   service:

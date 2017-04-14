@@ -16,23 +16,23 @@
     - python3-psycopg2
 
 
-- name: POSTGRESQL | Create PostgreSQL user '{{ database.owner }}'
-  become: true
-  become_user: postgres
-  postgresql_user:
-    name: "{{ database.name }}"
-    password: "{{ database.password }}"
-    state: present
-
-
-- name: POSTGRESQL | Create PostgreSQL database '{{ database.name }}' with owner '{{ database.owner }}'
-  become: true
-  become_user: postgres
-  postgresql_db:
-    name: "{{ database.name }}"
-    owner: "{{ database.owner }}"
-    encoding: UTF-8
-#    lc_collate: hr_HR.UTF-8
-#    lc_ctype: hr_HR.UTF-8
-    template: template0
-    state: present
+#- name: POSTGRESQL | Create PostgreSQL user '{{ database.owner }}'
+#  become: true
+#  become_user: postgres
+#  postgresql_user:
+#    name: "{{ database.name }}"
+#    password: "{{ database.password }}"
+#    state: present
+#
+#
+#- name: POSTGRESQL | Create PostgreSQL database '{{ database.name }}' with owner '{{ database.owner }}'
+#  become: true
+#  become_user: postgres
+#  postgresql_db:
+#    name: "{{ database.name }}"
+#    owner: "{{ database.owner }}"
+#    encoding: UTF-8
+##    lc_collate: hr_HR.UTF-8
+##    lc_ctype: hr_HR.UTF-8
+#    template: template0
+#    state: present

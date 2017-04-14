@@ -29,6 +29,7 @@
     - openssl
     - libssl-dev
     - libssl-doc
+    - redis-server
     #- jenkins
 
 

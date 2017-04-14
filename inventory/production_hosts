@@ -1,13 +1,15 @@
-[localhost]
-localhost       ansible_connection=local
 
-[webservers]
-#139.162.183.47  ansible_user=root   ansible_python_interpreter=python3
-#139.162.164.196  ansible_user=deploy
-139.162.176.200
 
-[prostoria]
-139.162.183.47
+[nora_masters]
+nora_load_balancer  ansible_host=46.101.224.208  ansible_python_interpreter=python3
 
-[dmf]
-139.162.176.200
+[nora_slaves]
+nora_django_1       ansible_host=207.154.202.154
+nora_django_2       ansible_host=207.154.209.137
+
+[nora:children]
+nora_masters
+nora_slaves
+
+[nora:vars]
+env=nora

@@ -1,0 +1,27 @@
+# Project
+project_name: example
+domains:
+  - example.com
+  - www.example.com
+
+# Linux
+linux_user: deploy
+password: ''
+supervisor_password: ''
+
+# Files
+git_repo: ''
+requirements_file: reqs/base
+
+# Database
+database_name: example
+database_owner: example
+database_password: example
+
+# Secret key
+secret_key: random_str
+
+# Admin
+admin_name: Kathryn Janeway
+admin_email: kathy@voyager.com
+

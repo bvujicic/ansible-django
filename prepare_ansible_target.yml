@@ -3,7 +3,7 @@
 
 - name: Prepare Ansible target
   gather_facts: false
-  hosts: all
+  hosts: "{{ env }}"
   user: root
   become: true
 

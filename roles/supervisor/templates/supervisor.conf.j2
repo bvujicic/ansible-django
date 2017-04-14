@@ -34,10 +34,10 @@ files = /etc/supervisor/conf.d/*.conf
 
 port=9001
 username={{ host.user }}
-password={{ password }}
+password={{ supervisor_password }}
 
 
-[program:gunicorn]
+[program:django-application]
 
 command={{ project.env.path }}bin/gunicorn {{ project.name }}.wsgi:application -c {{ host.home }}conf/gunicorn.conf.py
 directory={{ project.path }}

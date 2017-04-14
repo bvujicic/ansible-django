@@ -8,9 +8,8 @@
     accept_hostkey: true
     version: "{{ project.repo.branch }}"
 
-  notify: restart uwsgi
 
-- name: Create local directories
+- name: SYSTEM | Create local directories
   file:
     path: "{{ project.path }}{{ item }}"
     state: directory
@@ -20,34 +19,7 @@
     - media
     - config
 
-#- name: Set permissions
-#  file:
-#    dest: "{{ host.home }}"
-#    owner: "{{ host.user }}"
-#    group: "{{ host.user }}"
-#    recurse: true
-
-- name: Install requirements to "{{ project.env.path }}"
-  become: true
-  become_user: "{{ host.user }}"
-  pip:
-    virtualenv: "{{ project.env.path }}"
-    virtualenv_python: "{{ python.version }}"
-    requirements: "{{ project.reqs_path }}"
-
-  notify: restart uwsgi
-
-- name: Activate environment
-  shell: . {{ project.env.path }}bin/activate
-
-
-- name: Copy YAML config file
-  template:
-    src: config.yml
-    dest: "{{ project.path }}config/config.yml"
-
-
-- name: Set permissions
+- name: SYSTEM | Set owner to '{{ host.user }}'
   file:
     dest: "{{ host.home }}"
     owner: "{{ host.user }}"
@@ -55,16 +27,54 @@
     recurse: true
 
 
-- name: Migrate the database
-  #become: true
-  #become_user: "{{ host.user }}"
-  command: "{{ project.env.python }} {{ project.path }}manage.py migrate"
+- name: ENV | Install requirements to "{{ project.env.path }}"
+  become: true
+  become_user: "{{ host.user }}"
+  pip:
+    virtualenv: "{{ project.env.path }}"
+    virtualenv_python: "{{ python.version }}"
+    requirements: "{{ project.reqs_path }}"
 
 
-#- name: Collect static files
-#  #become: true
-#  #become_user: "{{ host.user }}"
-#  expect:
-#    command: "{{ project.env.python }} {{ project.path }}/manage.py collectstatic"
-#    responses:
-#      'yes': 'yes'
+- name: ENV | Activate environment
+  shell: . {{ project.env.path }}bin/activate
+
+
+- name: DJANGO | Copy YAML config file
+  template:
+    src: config.yml
+    dest: "{{ project.path }}config/config.yml"
+
+
+#- name: SYSTEM | Set permissions
+#  file:
+#    dest: "{{ host.home }}"
+#    owner: "{{ host.user }}"
+#    group: "{{ host.user }}"
+#    recurse: true
+
+
+- name: DJANGO | Migrate the database
+  become: true
+  become_user: "{{ host.user }}"
+  django_manage:
+    virtualenv: "{{ project.env.path }}"
+    app_path: "{{ project.path }}"
+    command: migrate
+
+
+- name: DJANGO | Collect static files
+  become: true
+  become_user: "{{ host.user }}"
+  django_manage:
+    virtualenv: "{{ project.env.path }}"
+    app_path: "{{ project.path }}"
+    command: collectstatic
+
+#
+#- name: SYSTEM | Set owner to '{{ host.user }}'
+#  file:
+#    dest: "{{ host.home }}"
+#    owner: "{{ host.user }}"
+#    group: "{{ host.user }}"
+#    recurse: true

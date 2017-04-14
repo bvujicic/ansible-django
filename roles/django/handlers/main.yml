@@ -1,8 +1,1 @@
 ---
-
-- name: restart uwsgi
-  become: true
-  service:
-    name: uwsgi.service
-    enabled: true
-    state: restarted

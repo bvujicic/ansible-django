@@ -19,6 +19,11 @@
     state: stopped
 
 
+- name: SSL | Generate Diffie-Hellman params
+  become: true
+  command: openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+
+
 - name: Create Letsencrypt certificate
   become: true
   shell: letsencrypt certonly -n --standalone --agree-tos -m {{ letsencrypt.email }} -d {{ item }}
