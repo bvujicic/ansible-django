@@ -44,3 +44,4 @@ database:
   name: "{{ database_name }}"
   owner: "{{ database_owner }}"
   password: "{{ database_password }}"
+  host: "{{ database_host }}"

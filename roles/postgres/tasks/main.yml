@@ -9,11 +9,49 @@
     state: present
 
   with_items:
-    - postgresql
-    - postgresql-server-dev-all
+    - postgresql-{{ pg_version }}
+    - postgresql-server-dev-{{ pg_version }}
     - libpq-dev
     - python-psycopg2
     - python3-psycopg2
+
+#- debug:
+#    msg: "{% for h in groups[env] %} {{ hostvars[h].ansible_eth1.ipv4.address }} {% endfor %}"
+##    msg: "{{ hostvars }}"
+
+- name: POSTGRESQL | Update pg_hba.conf file
+  become: true
+  template:
+    src: pg_hba.conf.j2
+    dest: /etc/postgresql/{{ pg_version }}/{{ pg_cluster }}/pg_hba.conf
+    owner: postgres
+    group: postgres
+    mode: 0640
+  when: skip_database is not defined
+  notify:
+    - restart postgresql
+
+
+- name: POSTGRESQL | Update postgres.conf file
+  become: true
+  template:
+    src: postgres.conf.j2
+    dest: /etc/postgresql/{{ pg_version }}/{{ pg_cluster }}/postgresql.conf
+    owner: postgres
+    group: postgres
+    mode: 0640
+  when: skip_database is not defined
+  notify:
+    - restart postgresql
+
+
+- name: restart postgresql
+  become: true
+  service:
+    name: postgresql
+    state: restarted
+#    arguments: "{{ pg_version }}"
+  when: skip_database is not defined
 
 
 - name: POSTGRESQL | Create PostgreSQL user '{{ database.owner }}'

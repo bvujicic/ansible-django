@@ -15,7 +15,7 @@ django_database:
   name: '{{ database.name }}'
   user: '{{ database.owner }}'
   password: '{{ database.password }}'
-  host: 'localhost'
+  host: '{{ database.host }}'
   port: '5432'
 
 django_redis:

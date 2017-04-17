@@ -1,10 +1,10 @@
 
 [nora_masters]
-nora_load_balancer  ansible_host=207.154.255.31  ansible_python_interpreter=python3
+nora_load_balancer  ansible_host=138.68.105.21  ansible_python_interpreter=python3
 
 [nora_slaves]
-nora_django_1       ansible_host=207.154.255.34
-nora_django_2       ansible_host=207.154.255.39
+nora_django_1       ansible_host=207.154.208.191
+nora_django_2       ansible_host=207.154.226.30
 
 [nora_slaves:vars]
 skip_database=true
