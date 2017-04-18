@@ -10,12 +10,12 @@
   roles:
 #    - package
 #    - user
-    - postgres
-#    - { role: nginx, when: skip_database is not defined }
+#    - postgres
+    - { role: nginx, when: skip_database is not defined }
 #    - django
-#    - gunicorn
+    - gunicorn
 #    - letsencrypt
-#    - supervisor
+    - supervisor
 
 
 #- name: Setup Django server

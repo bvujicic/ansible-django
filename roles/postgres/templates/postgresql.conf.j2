@@ -56,7 +56,7 @@ external_pid_file = '/var/run/postgresql/9.5-main.pid'			# write an extra PID fi
 
 # - Connection Settings -
 
-listen_addresses = '*'		# what IP address(es) to listen on;
+listen_addresses = 'localhost{% for h in groups[env] %},{{ hostvars[h].ansible_eth1.ipv4.address }}{% endfor %}'		# what IP address(es) to listen on;
 					# comma-separated list of addresses;
 					# defaults to 'localhost'; use '*' for all
 					# (change requires restart)
@@ -438,7 +438,7 @@ log_line_prefix = '%t [%p-%l] %q%u@%d '			# special values:
 #log_temp_files = -1			# log temporary files equal or larger
 					# than the specified size in kilobytes;
 					# -1 disables, 0 logs all temp files
-log_timezone = 'localtime'
+log_timezone = 'UTC'
 
 
 # - Process Title -
@@ -531,9 +531,9 @@ stats_temp_directory = '/var/run/postgresql/9.5-main.pg_stat_tmp'
 
 # - Locale and Formatting -
 
-datestyle = 'iso, dmy'
+datestyle = 'iso, mdy'
 #intervalstyle = 'postgres'
-timezone = 'localtime'
+timezone = 'UTC'
 #timezone_abbreviations = 'Default'     # Select the set of available time zone
 					# abbreviations.  Currently, there are
 					#   Default
@@ -548,9 +548,9 @@ timezone = 'localtime'
 # These settings are initialized by initdb, but they can be changed.
 lc_messages = 'en_US.UTF-8'			# locale for system error message
 					# strings
-lc_monetary = 'hr_HR.UTF-8'			# locale for monetary formatting
-lc_numeric = 'hr_HR.UTF-8'			# locale for number formatting
-lc_time = 'hr_HR.UTF-8'				# locale for time formatting
+lc_monetary = 'en_US.UTF-8'			# locale for monetary formatting
+lc_numeric = 'en_US.UTF-8'			# locale for number formatting
+lc_time = 'en_US.UTF-8'				# locale for time formatting
 
 # default configuration for text search
 default_text_search_config = 'pg_catalog.english'

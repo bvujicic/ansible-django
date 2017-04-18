@@ -1,5 +1,7 @@
 upstream {{ project.name }} {
-        server 127.0.0.1:8000;
+        {% for h in groups[env] %}
+        server {{ hostvars[h].ansible_eth1.ipv4.address }}:8000;
+        {% endfor %}
 }
 
 #server {
@@ -10,7 +12,7 @@ upstream {{ project.name }} {
 
 server {
         listen {{ host.port.http }};
-        server_name {% for domain in domains %}{{ domain }} {% endfor %}{{ ansible_eth0.ipv4.address }};
+        server_name {{ ansible_eth0.ipv4.address }};
         access_log {{ host.home }}log/nginx-access.log;
         error_log {{ host.home }}log/nginx-error.log;
         charset utf-8;
@@ -54,17 +56,31 @@ server {
         }
 
         location / {
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_pass          http://{{ project_name }};
+            proxy_set_header    X-Real-IP           $remote_addr;
+            proxy_set_header    X-Forwarded-For     $proxy_add_x_forwarded_for;
+            proxy_set_header    X-Forwarded-Proto   $scheme;
+
             # enable this if and only if you use HTTPS
             # proxy_set_header X-Forwarded-Proto https;
-            proxy_set_header Host $http_host;
+
             # we don't want nginx trying to do something clever with
             # redirects, we set the Host: header above already.
-            proxy_redirect off;
-            proxy_pass http://{{ project_name }};
+            #proxy_redirect off;
         }
 
-          gzip on;
-          gzip_types text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript;
-          gzip_vary on;
+        location /nginx_status {
+            stub_status on;
+
+            # Do not log access queries for status page
+            access_log   off;
+
+            allow all;
+            #allow x.x.x.x;
+            #deny all;
+        }
+
+        gzip on;
+        gzip_types text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+        gzip_vary on;
 }

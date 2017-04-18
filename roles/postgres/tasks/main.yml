@@ -1,6 +1,19 @@
 ---
 
-- name: POSTGRESQL | Install system packages
+- name: POSTGRESQL | Install PostgreSQL server
+  package:
+    name: "{{ item }}"
+    install_recommends: true
+    update_cache: true
+    cache_valid_time: 3600
+    state: present
+  with_items:
+    - postgresql-{{ pg_version }}
+    - postgresql-server-dev-{{ pg_version }}
+  when: skip_database is not defined
+
+
+- name: POSTGRESQL | Install Psycopg2
   package:
     name: "{{ item }}"
     install_recommends: true
@@ -9,15 +22,10 @@
     state: present
 
   with_items:
-    - postgresql-{{ pg_version }}
-    - postgresql-server-dev-{{ pg_version }}
     - libpq-dev
     - python-psycopg2
     - python3-psycopg2
 
-#- debug:
-#    msg: "{% for h in groups[env] %} {{ hostvars[h].ansible_eth1.ipv4.address }} {% endfor %}"
-##    msg: "{{ hostvars }}"
 
 - name: POSTGRESQL | Update pg_hba.conf file
   become: true
@@ -32,10 +40,10 @@
     - restart postgresql
 
 
-- name: POSTGRESQL | Update postgres.conf file
+- name: POSTGRESQL | Update postgresql.conf file
   become: true
   template:
-    src: postgres.conf.j2
+    src: postgresql.conf.j2
     dest: /etc/postgresql/{{ pg_version }}/{{ pg_cluster }}/postgresql.conf
     owner: postgres
     group: postgres
@@ -45,12 +53,11 @@
     - restart postgresql
 
 
-- name: restart postgresql
+- name: POSTGRESQL | Restart PostgreSQL
   become: true
   service:
     name: postgresql
     state: restarted
-#    arguments: "{{ pg_version }}"
   when: skip_database is not defined
 
 
