@@ -92,7 +92,7 @@ local   all             all                                     peer
 host    all             all             127.0.0.1/32            md5
 
 {% for h in groups[env] %}
-host    {{ database.name }} {{ database.owner }} {{ hostvars[h].ansible_eth1.ipv4.address }}/32 md5
+host    {{ database.name }} {{ database.owner }} {{ hostvars[h].private_ip }}/32 md5
 {% endfor %}
 
 # IPv6 local connections:

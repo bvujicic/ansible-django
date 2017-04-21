@@ -7,9 +7,9 @@
     update_cache: true
     cache_valid_time: 3600
     state: present
-
   with_items:
     - supervisor
+  when: deploy is not defined
 
 
 - name: SUPERVISOR | Create Supervisor configuration file
@@ -17,6 +17,14 @@
   template:
     src: supervisor.conf.j2
     dest: /etc/supervisor/supervisord.conf
+  when: deploy is not defined
 
   notify:
     - restart supervisor
+
+
+- name: SUPERVISOR | Restart Django
+  become: true
+  supervisorctl:
+    name: django-application
+    state: restarted

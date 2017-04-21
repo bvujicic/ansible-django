@@ -13,11 +13,11 @@
   file:
     path: "{{ project.path }}{{ item }}"
     state: directory
-
   with_items:
     - log
     - media
     - config
+  when: deploy is not defined
 
 - name: SYSTEM | Set owner to '{{ host.user }}'
   file:
@@ -25,6 +25,7 @@
     owner: "{{ host.user }}"
     group: "{{ host.user }}"
     recurse: true
+  when: deploy is not defined
 
 
 - name: ENV | Install requirements to "{{ project.env.path }}"
@@ -44,14 +45,6 @@
   template:
     src: config.yml
     dest: "{{ project.path }}config/config.yml"
-
-
-#- name: SYSTEM | Set permissions
-#  file:
-#    dest: "{{ host.home }}"
-#    owner: "{{ host.user }}"
-#    group: "{{ host.user }}"
-#    recurse: true
 
 
 - name: DJANGO | Migrate the database

@@ -1,0 +1,14 @@
+---
+
+- name: Deploy application
+  hosts: "{{ env }}"
+  user: root
+  vars:
+    deploy: true
+  vars_files:
+    - group_vars/external/{{ env }}.yml
+    - group_vars/all.yml
+
+  roles:
+    - django
+    - supervisor

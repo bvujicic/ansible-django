@@ -11,6 +11,7 @@
 
 
 - name: SYSTEM | Install global packages
+  become: true
   package:
     name: "{{ item }}"
     install_recommends: true
@@ -33,6 +34,7 @@
 
 
 - name: SYSTEM | Install Python 2 and Python 3 packages
+  become: true
   package:
     name: "{{ item }}"
     install_recommends: true

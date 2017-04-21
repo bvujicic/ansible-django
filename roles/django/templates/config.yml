@@ -18,14 +18,14 @@ django_database:
   host: '{{ database.host }}'
   port: '5432'
 
-django_redis:
-  location: 'redis://localhost:6379/0'
+#django_redis:
+#  location: 'redis://localhost:6379/0'
 
 django_log:
   path: '{{ project.path }}log'
 
 django_email:
-  backend: 'console' # 'console', 'smtp'
+  backend: 'smtp' # 'console', 'smtp'
   host: 'smtp.example.com'
   host_user: 'user'
   host_password: 'pass'
@@ -38,6 +38,6 @@ django_static:
   root: '{{ host.home }}static'
 
 django_cloudinary:
-  cloud_name: ''
-  api_key: ''
-  api_secret: ''
+  cloud_name: '{{ cloudinary_cloud_name }}'
+  api_key: '{{ cloudinary_api_key }}'
+  api_secret: '{{ cloudinary_api_secret }}'

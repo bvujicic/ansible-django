@@ -1,12 +1,12 @@
 upstream {{ project.name }} {
         {% for h in groups[env] %}
-        server {{ hostvars[h].ansible_eth1.ipv4.address }}:8000;
+        server {{ hostvars[h].private_ip }}:8000;
         {% endfor %}
 }
 
 #server {
 #        listen {{ host.port.http }};
-#        server_name {% for domain in domains %}{{ domain }} {% endfor %}{{ ansible_eth0.ipv4.address }};
+#        server_name {% for domain in domains %}{{ domain }} {% endfor %}{{ private_ip }};
 #        return 301 https://$host$request_uri;
 #}
 

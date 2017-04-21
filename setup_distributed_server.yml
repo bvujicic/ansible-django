@@ -11,26 +11,8 @@
 #    - package
 #    - user
 #    - postgres
-    - { role: nginx, when: skip_database is not defined }
-#    - django
-    - gunicorn
+#    - { role: nginx, when: skip_database is not defined }
+    - django
+#    - gunicorn
 #    - letsencrypt
     - supervisor
-
-
-#- name: Setup Django server
-#  hosts: "{{ env }}_slaves"
-#  user: root
-#  vars_files:
-#    - group_vars/external/{{ env }}.yml
-#    - group_vars/all.yml
-#
-#  roles:
-#    - package
-#    - user
-#    - postgres
-##    - nginx
-#    - django
-#    - gunicorn
-##    - letsencrypt
-#    - supervisor
