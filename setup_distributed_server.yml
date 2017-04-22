@@ -8,11 +8,11 @@
     - group_vars/all.yml
 
   roles:
-#    - package
-#    - user
-#    - postgres
-#    - { role: nginx, when: skip_database is not defined }
+    - package
+    - user
+    - postgres
+    - { role: nginx, when: skip_database is not defined }
     - django
-#    - gunicorn
-#    - letsencrypt
+    - gunicorn
+    - letsencrypt
     - supervisor
