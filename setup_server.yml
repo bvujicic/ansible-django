@@ -9,11 +9,11 @@
 
 
   roles:
-#    - package
-#    - user
-#    - postgres
-#    - nginx
-#    - django
-#    - gunicorn
+    - package
+    - user
+    - postgres
+    - nginx
+    - django
+    - gunicorn
     - letsencrypt
-#    - supervisor
+    - supervisor

@@ -38,7 +38,16 @@
   template:
     src: nginx.conf.j2
     dest: "{{ host.home }}conf/nginx.conf"
+  when: tls is not defined
+  notify:
+    - restart nginx
 
+
+- name: NGINX | Create Nginx TLS configuration file
+  template:
+    src: nginx_tls.conf.j2
+    dest: "{{ host.home }}conf/nginx.conf"
+  when: tls is defined
   notify:
     - restart nginx
 
