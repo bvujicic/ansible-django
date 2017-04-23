@@ -11,6 +11,7 @@
 - name: GUNICORN | Activate environment
   shell: . {{ project.env.path }}bin/activate
 
+
 - name: GUNICORN | Create configuration file
   template:
     src: gunicorn.conf.j2
