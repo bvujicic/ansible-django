@@ -25,11 +25,11 @@
     - screen
     - git-all
     - git-flow
-    - redis-server
     - gettext
     - openssl
     - libssl-dev
     - libssl-doc
+    - nmap
     #- jenkins
 
 

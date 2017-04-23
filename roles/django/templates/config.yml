@@ -18,17 +18,17 @@ django_database:
   host: '{{ database.host }}'
   port: '5432'
 
-#django_redis:
-#  location: 'redis://localhost:6379/0'
+django_redis:
+  location: 'redis://{{ redis_host }}:6379/0'
 
 django_log:
   path: '{{ project.path }}log'
 
 django_email:
-  backend: 'smtp' # 'console', 'smtp'
-  host: 'smtp.example.com'
-  host_user: 'user'
-  host_password: 'pass'
+  backend: '{{ email_backend }}' # 'console', 'smtp'
+  host: '{{ email_host }}'
+  host_user: '{{ email_user }}'
+  host_password: '{{ email_pass }}'
 
 django_admin:
   name: '{{ admin.name }}'

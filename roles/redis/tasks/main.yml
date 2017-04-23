@@ -1,0 +1,23 @@
+---
+
+- name: REDIS | Install global packages
+  become: true
+  package:
+    name: "{{ item }}"
+    install_recommends: true
+    update_cache: true
+    cache_valid_time: 3600
+    state: present
+
+  with_items:
+    - redis-server
+
+
+- name: REDIS | Create Redis configuration file
+  become: true
+  template:
+    src: redis.conf.j2
+    dest: "/etc/redis/redis.conf"
+
+  notify:
+    - restart redis

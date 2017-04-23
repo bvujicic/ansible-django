@@ -12,6 +12,7 @@
     - package
     - user
     - postgres
+    - redis
     - nginx
     - django
     - gunicorn
