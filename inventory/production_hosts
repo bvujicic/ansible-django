@@ -1,10 +1,11 @@
 
 [nora_masters]
-nora_load_balancer  ansible_host=207.154.241.71  ansible_python_interpreter=python3
+load_balancer  ansible_host=172.104.147.209  private_ip=192.168.151.25 ansible_python_interpreter=python3
 
 [nora_slaves]
-nora_django_1       ansible_host=207.154.254.237
-nora_django_2       ansible_host=207.154.254.249
+slave_1       ansible_host=172.104.139.105   private_ip=192.168.133.76
+slave_2       ansible_host=172.104.148.242   private_ip=192.168.139.248
+slave_3       ansible_host=172.104.131.62    private_ip=192.168.157.176
 
 [nora_slaves:vars]
 skip_database=true

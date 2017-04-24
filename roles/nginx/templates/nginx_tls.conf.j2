@@ -6,13 +6,13 @@ upstream {{ project.name }} {
 
 server {
         listen {{ host.port.http }};
-        server_name {% for domain in domains %}{{ domain }} {% endfor %}{{ ansible_eth0.ipv4.address }};
-        return 301 https://$host$request_uri;
+        server_name {% for domain in domains %}{% if loop.index != 1 %}{{ domain }} {% endif %}{% endfor %};
+        return 301 https://{{ host.domain.0}}$request_uri;
 }
 
 server {
-        listen {{ host.port.https }} ssl http2;
-        server_name {% for domain in domains %}{{ domain }} {% endfor %}{{ ansible_eth0.ipv4.address }};
+        listen {{ host.port.https }} ssl;
+        server_name {% for domain in domains %}{{ domain }} {% endfor %};
         access_log {{ host.home }}log/nginx-access.log;
         error_log {{ host.home }}log/nginx-error.log;
         charset utf-8;
@@ -76,12 +76,11 @@ server {
             # Do not log access queries for status page
             access_log   off;
 
-            allow all;
-            #allow x.x.x.x;
+            #allow all;
+            allow 127.0.0.1;
             #deny all;
         }
 
         gzip on;
-        gzip_types text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+        gzip_types application/json text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript;
         gzip_vary on;
-}
