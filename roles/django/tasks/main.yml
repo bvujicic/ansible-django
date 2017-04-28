@@ -35,7 +35,7 @@
     virtualenv: "{{ project.env.path }}"
     virtualenv_python: "{{ python.version }}"
     requirements: "{{ project.reqs_path }}"
-#    extra_args: --force-reinstall
+    extra_args: --exists-action=w
 #    state: forcereinstall
 
 - name: ENV | Activate environment

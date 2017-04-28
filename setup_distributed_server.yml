@@ -8,12 +8,12 @@
     - group_vars/all.yml
 
   roles:
-    - package
-    - user
-    - postgres
+#    - package
+#    - user
+#    - postgres
     - { role: nginx, when: skip_database is not defined }
-    - { role: redis, when: skip_database is not defined }
-    - django
-    - gunicorn
-    - letsencrypt
-    - supervisor
+#    - { role: redis, when: skip_database is not defined }
+#    - django
+#    - gunicorn
+#    - { role: letsencrypt, when: skip_database is not defined }
+#    - supervisor
