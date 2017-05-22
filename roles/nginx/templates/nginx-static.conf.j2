@@ -1,0 +1,17 @@
+server {
+        listen {{ host.port.http }};
+        server_name {{ domains.0 }};
+        access_log {{ host.home }}log/nginx-access.log;
+        error_log {{ host.home }}log/nginx-error.log;
+        charset utf-8;
+
+        client_max_body_size 75M;
+
+        location / {
+            root /home/deploy/tcom_native;
+        }
+
+        location /static/ {
+
+        }
+}
