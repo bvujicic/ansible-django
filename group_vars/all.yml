@@ -25,7 +25,7 @@ project:
   reqs_path: "{{ host.home }}{{ project_name }}/{{ requirements_file }}"
   repo:
     url: "{{ git_repo }}"
-    branch: develop
+    branch: "{{ git_branch }}"
   env:
     path: "/home/{{ host.user}}/.env/{{ project_name }}/"
     python: "/home/{{ host.user}}/.env/{{ project_name }}/bin/python"
