@@ -7,7 +7,6 @@
     update_cache: true
     cache_valid_time: 3600
     state: present
-  when: skip_database is not defined
 
   with_items:
     - letsencrypt
@@ -22,7 +21,7 @@
 
 - name: SSL | Generate Diffie-Hellman params
   become: true
-  shell: openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+  command: openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
   args:
     creates: /etc/ssl/certs/dhparam.pem
   when: skip_database is not defined

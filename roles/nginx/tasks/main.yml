@@ -67,3 +67,4 @@
 
   notify:
     - restart nginx
+
