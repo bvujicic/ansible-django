@@ -4,20 +4,25 @@ upstream {{ project.name }} {
         {% endfor %}
 }
 
-#server {
-#        listen {{ host.port.http }};
-#        server_name {% for domain in domains %}{% if loop.index != 1 %}{{ domain }} {% endif %}{% endfor %};
-#        return 301 http://{{ host.port.http }}$request_uri;
-#}
+server {
+        listen {{ host.port.http }};
+        server_name {% for domain in domains %}{% if loop.index != 1 %}{{ domain }} {% endif %}{% endfor %};
+        return 301 http://{{ domains.0 }}$request_uri;
+}
 
 server {
         listen {{ host.port.http }};
-        server_name {{ ansible_eth0.ipv4.address }}{% for domain in domains %} {{ domain }}{% endfor %};
+        server_name {{ ansible_eth0.ipv4.address }} {{ domains.0 }};
         access_log {{ host.home }}log/nginx-access.log;
         error_log {{ host.home }}log/nginx-error.log;
         charset utf-8;
 
         client_max_body_size 75M;
+
+        location ~ /.well-known {
+            allow all;
+            root {{ host.home }}{{ project.name }}/;
+        }
 
         location /static/ {
                 alias {{ host.home }}static/;

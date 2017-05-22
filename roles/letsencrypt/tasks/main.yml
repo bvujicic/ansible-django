@@ -11,11 +11,20 @@
   with_items:
     - letsencrypt
 
+
+#- name: Stop nginx temporarily if it's running
+#  become: true
+#  service:
+#    name: nginx
+#    state: stopped
+
+
 - name: SSL | Generate Diffie-Hellman params
   become: true
   command: openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
   args:
     creates: /etc/ssl/certs/dhparam.pem
+  when: skip_database is not defined
 
 
 - name: Create Letsencrypt certificate script
@@ -24,6 +33,7 @@
     src: letsencrypt.sh.j2
     dest: "{{ host.home }}letsencrypt.sh"
     mode: 0777
+  when: skip_database is not defined
 
 
 - name: Create Letsencrypt renewal script
@@ -32,6 +42,15 @@
     src: letsencrypt-renew.sh.j2
     dest: "{{ host.home }}letsencrypt-renew.sh"
     mode: 0777
+  when: skip_database is not defined
+
+
+- name: Execute Letsencrypt certificate script
+  become: true
+  shell: "{{ host.home }}letsencrypt-renew.sh"
+  when: skip_database is not defined
+#  notify:
+#    - restart nginx
 
 
 - name: Create Letsencrypt cronjob for automatic certificate renewal
@@ -40,18 +59,5 @@
     name: letsencrypt_renewal
     special_time: weekly
     job: "{{ host.home}}letsencrypt-renew.sh"
+  when: skip_database is not defined
 
-
-- name: Stop nginx temporarily if it's running
-  become: true
-  service:
-    name: nginx
-    state: stopped
-
-
-- name: Execute Letsencrypt certificate script
-  become: true
-  shell: "{{ host.home }}letsencrypt.sh"
-
-  notify:
-    - restart nginx

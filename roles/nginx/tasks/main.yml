@@ -1,8 +1,14 @@
 ---
 
+#- name: Debug
+#  debug:
+#    msg: "{{ domains.0 }}"
+
+
 - name: Check if Apache exists
   stat: path=/etc/init.d/apache2
   register: service_status
+
 
 - name: Stop Apache service
   service: name=apache2 state=stopped
