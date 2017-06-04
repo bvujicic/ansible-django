@@ -1,0 +1,8 @@
+---
+
+- name: Install Jenkins CI
+  hosts: jenkins
+  user: root
+
+  roles:
+    - jenkins

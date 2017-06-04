@@ -1,0 +1,24 @@
+---
+
+- name: Install dependencies.
+  package:
+    name:
+      - curl
+    state: installed
+
+- name: Install repository.
+  apt_key:
+    url: "{{ jenkins_key_url }}"
+    state: present
+
+- name: Add repository to sources list.
+  apt_repository:
+    repo: "deb {{ jenkins_repo_url }} binary/"
+    state: present
+
+- name: Install Jenkins from repository.
+  package:
+    name: jenkins
+    install_recommends: true
+    update_cache: true
+    state: installed
