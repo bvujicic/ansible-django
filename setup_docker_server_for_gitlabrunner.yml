@@ -5,9 +5,9 @@
 - name: Setup docker-compose web server
   hosts: all
   user: root
-  vars_files:
-    - group_vars/external/{{ env }}.yml
-    - group_vars/all.yml
+#  vars_files:
+#    - group_vars/external/{{ env }}.yml
+#    - group_vars/all.yml
 
 
   roles:
