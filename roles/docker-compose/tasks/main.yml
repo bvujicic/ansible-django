@@ -34,3 +34,17 @@
       url : https://github.com/docker/compose/releases/download/1.13.0/docker-compose-{{ ansible_system }}-{{ ansible_userspace_architecture }}
       dest: /usr/local/bin/docker-compose
       mode: 'u+x,g+x'
+
+- name: GIT checkout repository
+  become_user: "{{ host.user }}"
+  git:
+    repo: "{{ project.repo.url }}"
+    version: "{{ project.repo.branch }}"
+    dest: "{{ project.path }}"
+
+- name: Copy .env file
+  copy:
+    src: "{{ env_file }}"
+    dest: "{{ project.path }}config/.env"
+    owner: "{{ host.user }}"
+    group: "{{ host.user }}"

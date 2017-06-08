@@ -1,0 +1,13 @@
+---
+
+- name: SYSTEM | Create local directories
+  file:
+    path: "{{ host.home }}{{ item }}"
+    state: directory
+    owner: "{{ host.user }}"
+    group: "{{ host.user }}"
+
+  with_items:
+    - log
+    - static
+    - conf

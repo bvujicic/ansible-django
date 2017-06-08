@@ -1,14 +1,12 @@
 # This playbook is started with gitlab-ci docker executor using williamyeh/ansible:debian8 image and
-# setups the target host with Docker Compose  # and
-## public SSH key is copied to authorized_keys
+# setups the target host with Docker Compose
 
 - name: Setup docker-compose web server
-  hosts: all
+  hosts: "{{ env }}"
   user: root
-#  vars_files:
-#    - group_vars/external/{{ env }}.yml
-#    - group_vars/all.yml
-
-
+  vars_files:
+    - group_vars/external/{{ env }}.yml
+    - group_vars/docker.yml
   roles:
+    - user
     - docker-compose
