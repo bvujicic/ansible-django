@@ -1,5 +1,6 @@
-# This playbook is started with gitlab-ci docker executor using williamyeh/ansible:debian8 image and
-# setups the target host with Docker Compose
+# This playbook setups the target host with a new user, DockerCompose and prepares project on target host
+# start it with e.g.:
+# ansible-playbook -v setup_docker_server_for_gitlabrunner.yml -i inventory/docker_hosts -e env=experiments
 
 - name: Setup docker-compose web server
   hosts: "{{ env }}"
@@ -9,4 +10,4 @@
     - group_vars/docker.yml
   roles:
     - user
-    - docker-compose
+    - docker-compose-setup
