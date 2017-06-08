@@ -12,12 +12,12 @@
     - gnupg2
     - software-properties-common
 
-- name: Install repository.
+- name: Install Docker repository.
   apt_key:
     url: "https://download.docker.com/linux/debian/gpg"
     state: present
 
-- name: Add repository to sources list.
+- name: Add Docker repository to sources list.
   apt_repository:
     repo: "deb [arch=amd64] https://download.docker.com/linux/debian jessie stable"
     state: present
@@ -35,9 +35,11 @@
       dest: /usr/local/bin/docker-compose
       mode: 'u+x,g+x'
 
-- name: GIT checkout repository
+- name: GIT checkout project repository
+  become: true
   become_user: "{{ host.user }}"
   git:
+    accept_hostkey: true
     repo: "{{ project.repo.url }}"
     version: "{{ project.repo.branch }}"
     dest: "{{ project.path }}"
