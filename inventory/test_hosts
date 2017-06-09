@@ -1,2 +1,0 @@
-[test]
-test_1       ansible_host=138.68.97.36  private_ip=10.135.5.134 tls=true
