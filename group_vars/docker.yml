@@ -1,0 +1,10 @@
+host:
+  user: "{{ linux_user }}"
+  home: "/home/{{ linux_user }}/"
+
+project:
+  name: "{{ project_name }}"
+  path: "{{ host.home }}{{ project_name }}/"
+  repo:
+    url: "{{ git_repo }}"
+    branch: "{{ git_branch }}"

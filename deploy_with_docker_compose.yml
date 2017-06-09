@@ -1,0 +1,13 @@
+---
+
+- name: Deploy docker-compose application
+  hosts: all
+  user: root
+  # vars:
+  #   deploy: true
+  # vars_files:
+  #   - group_vars/external/{{ env }}.yml
+  #   - group_vars/all.yml
+
+  roles:
+    - docker-compose-deploy

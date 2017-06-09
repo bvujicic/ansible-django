@@ -1,6 +1,6 @@
 .idea
 *.retry
 external/
-inventory
+inventory/
 
 *.orig

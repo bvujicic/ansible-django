@@ -11,6 +11,7 @@
   roles:
 #    - package
     - user
+    - local-folders
     - postgres
     - redis
     - nginx

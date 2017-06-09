@@ -1,0 +1,13 @@
+# This playbook setups the target host with a new user, DockerCompose and prepares project on target host
+# start it with e.g.:
+# ansible-playbook -v setup_docker_server_for_gitlabrunner.yml -i inventory/docker_hosts -e env=experiments
+
+- name: Setup docker-compose web server
+  hosts: "{{ env }}"
+  user: root
+  vars_files:
+    - group_vars/external/{{ env }}.yml
+    - group_vars/docker.yml
+  roles:
+    - user
+    - docker-compose-setup

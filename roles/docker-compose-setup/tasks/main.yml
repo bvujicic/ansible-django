@@ -1,0 +1,52 @@
+---
+
+- name: Install dependencies.
+  package:
+    name: "{{ item }}"
+    state: installed
+
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg2
+    - software-properties-common
+
+- name: Install Docker repository.
+  apt_key:
+    url: "https://download.docker.com/linux/debian/gpg"
+    state: present
+
+- name: Add Docker repository to sources list.
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/debian jessie stable"
+    state: present
+
+- name: Install Docker from repository.
+  package:
+    name: docker-ce
+    install_recommends: true
+    update_cache: true
+    state: installed
+
+- name: Install Docker Compose
+  get_url:
+      url : https://github.com/docker/compose/releases/download/1.13.0/docker-compose-{{ ansible_system }}-{{ ansible_userspace_architecture }}
+      dest: /usr/local/bin/docker-compose
+      mode: 'u+x,g+x'
+
+- name: GIT checkout project repository
+  become: true
+  become_user: "{{ host.user }}"
+  git:
+    accept_hostkey: true
+    repo: "{{ project.repo.url }}"
+    version: "{{ project.repo.branch }}"
+    dest: "{{ project.path }}"
+
+- name: Copy .env file
+  copy:
+    src: "{{ env_file }}"
+    dest: "{{ project.path }}config/.env"
+    owner: "{{ host.user }}"
+    group: "{{ host.user }}"

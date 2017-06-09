@@ -1,0 +1,11 @@
+---
+
+- name: GIT checkout project repository
+  become: true
+  become_user: "{{ host_user }}"
+  git:
+    accept_hostkey: true
+    repo: "{{ repo_url }}"
+    version: "{{ repo_branch }}"
+    dest: "{{ project_path }}"
+

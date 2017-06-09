@@ -10,6 +10,7 @@
   roles:
 #    - package
 #    - user
+#    - local-folders
 #    - postgres
     - { role: nginx, when: skip_database is not defined }
 #    - { role: redis, when: skip_database is not defined }
