@@ -44,14 +44,6 @@
     version: "{{ project.repo.branch }}"
     dest: "{{ project.path }}"
 
-- name: Copy .env file to /home/{{ host.user }}/.profile
-  copy:
-    src: "{{ env_file }}"
-    dest: "/home/{{ host.user }}/.profile"
-    owner: "{{ host.user }}"
-    group: "{{ host.user }}"
-
-# this should be removed later on
 - name: Copy .env file
   copy:
     src: "{{ env_file }}"
