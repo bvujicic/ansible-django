@@ -10,6 +10,6 @@
     - group_vars/all.yml
 
   roles:
-#    - { role: nginx, when: skip_database is not defined }
+    - { role: nginx, when: skip_database is not defined }
     - django
     - supervisor

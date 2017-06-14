@@ -11,3 +11,4 @@
   roles:
     - user
     - docker-compose-setup
+    - docker-compose-deploy

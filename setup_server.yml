@@ -9,7 +9,7 @@
 
 
   roles:
-#    - package
+    - package
     - user
     - local-folders
     - postgres

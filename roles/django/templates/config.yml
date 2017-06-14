@@ -7,7 +7,7 @@
 #django_allowed_hosts:
 #  - '139.162.138.55'
 
-django_secret_key: 'random_str'
+django_secret_key: '{{ secret_key }}'
 
 # comment this entire key to use sqlite3
 django_database:
