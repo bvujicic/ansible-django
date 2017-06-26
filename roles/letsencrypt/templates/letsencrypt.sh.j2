@@ -1,3 +1,5 @@
 #!/bin/bash -ex
 
+systemctl stop nginx
 letsencrypt certonly -n --standalone --agree-tos -m {{ letsencrypt.email }} {% for domain in domains %} -d {{ domain }}{% endfor %}
+systemctl start nginx
