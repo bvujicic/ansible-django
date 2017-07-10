@@ -1,0 +1,13 @@
+---
+
+- name: Setup Docker server
+  hosts: "{{ env }}"
+  user: root
+  vars_files:
+    - group_vars/external/{{ env }}.yml
+    - group_vars/all.yml
+
+
+  roles:
+    - user
+    - ansible-docker-setup

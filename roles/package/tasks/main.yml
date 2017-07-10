@@ -21,7 +21,6 @@
 
   with_items:
     - build-essential
-    - virtualenv
     - screen
     - git-all
     - git-flow

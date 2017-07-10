@@ -12,13 +12,6 @@
     - letsencrypt
 
 
-#- name: Stop nginx temporarily if it's running
-#  become: true
-#  service:
-#    name: nginx
-#    state: stopped
-
-
 - name: SSL | Generate Diffie-Hellman params
   become: true
   command: openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
@@ -49,8 +42,6 @@
   become: true
   shell: "{{ host.home }}letsencrypt-renew.sh"
   when: skip_database is not defined
-#  notify:
-#    - restart nginx
 
 
 - name: Create Letsencrypt cronjob for automatic certificate renewal

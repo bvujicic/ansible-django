@@ -6,14 +6,14 @@ upstream {{ project.name }} {
 
 server {
         listen {{ host.port.http }};
-        server_name {% for domain in domains %}{% if loop.index != 1 %}{{ domain }} {% endif %}{% endfor %};
+        server_name{% for domain in domains %} {{ domain }}{% endfor %};
         return 301 https://{{ domains.0 }}$request_uri;
 }
 
 
 server {
         listen {{ host.port.https }} ssl http2;
-        server_name {% for domain in domains %}{{ domain }} {% endfor %};
+        server_name {{ domains.0 }};
         access_log {{ host.home }}log/nginx-access.log;
         error_log {{ host.home }}log/nginx-error.log;
         charset utf-8;
@@ -68,7 +68,7 @@ server {
 
             # we don't want nginx trying to do something clever with
             # redirects, we set the Host: header above already.
-            #proxy_redirect off;
+            # proxy_redirect off;
         }
 
         location /nginx_status {
@@ -78,11 +78,11 @@ server {
             access_log   off;
 
             #allow all;
-            allow 127.0.0.1;
-            #deny all;
+            #allow 127.0.0.1;
+            deny all;
         }
 
         gzip on;
-        gzip_types text/plain text/css text/javascript text/xml application/json application/javascript application/x-javascript application/xml application/xml+rss;
+        gzip_types text/plain text/css text/javascript text/xml application/json application/javascript application/x-javascript application/xml application/xml+rss image/svg+xml image/jpeg image/png;
         gzip_vary on;
 }

@@ -10,6 +10,7 @@
     - group_vars/all.yml
 
   roles:
+    #- letsencrypt
     - { role: nginx, when: skip_database is not defined }
     - django
     - supervisor

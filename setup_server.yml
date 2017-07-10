@@ -9,13 +9,12 @@
 
 
   roles:
-    - package
-    - user
-    - local-folders
+#    - package
+#    - user
+#    - local-folders
     - postgres
     - redis
     - nginx
     - django
     - gunicorn
-#    - letsencrypt
     - supervisor

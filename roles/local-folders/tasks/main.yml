@@ -1,6 +1,7 @@
 ---
 
 - name: SYSTEM | Create local directories
+  become: true
   file:
     path: "{{ host.home }}{{ item }}"
     state: directory

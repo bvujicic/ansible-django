@@ -7,7 +7,7 @@ upstream {{ project.name }} {
 {% if domains.0 %}
 server {
         listen {{ host.port.http }};
-        server_name {% for domain in domains %}{% if loop.index != 1 %}{{ domain }} {% endif %}{% endfor %};
+        server_name {% for domain in domains %}{{ domain }}{% endfor %};
         return 301 http://{{ domains.0 }}$request_uri;
 }
 {% endif %}
@@ -69,6 +69,6 @@ server {
         }
 
         gzip on;
-        gzip_types text/plain text/css text/javascript text/xml application/json application/javascript application/x-javascript application/xml application/xml+rss;
+        gzip_types text/plain text/css text/javascript text/xml application/json application/javascript application/x-javascript application/xml application/xml+rss image/svg+xml image/jpeg image/png;
         gzip_vary on;
 }
