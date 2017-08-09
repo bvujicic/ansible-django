@@ -13,6 +13,7 @@
 
 
 - name: GUNICORN | Create configuration file
+  become: true
   template:
     src: gunicorn.conf.j2
     dest: "{{ host.home }}conf/gunicorn.conf.py"

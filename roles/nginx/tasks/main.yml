@@ -1,10 +1,5 @@
 ---
 
-#- name: Debug
-#  debug:
-#    msg: "{{ domains.0 }}"
-
-
 - name: Check if Apache exists
   stat: path=/etc/init.d/apache2
   register: service_status
@@ -46,8 +41,7 @@
     src: nginx.conf.j2
     dest: "{{ host.home }}conf/nginx.conf"
   when: tls is not defined
-  notify:
-    - restart nginx
+
 
 
 - name: NGINX | Create Nginx TLS configuration file
@@ -56,8 +50,6 @@
     src: nginx_tls.conf.j2
     dest: "{{ host.home }}conf/nginx.conf"
   when: tls is defined
-  notify:
-    - restart nginx
 
 
 - name: NGINX | Create Nginx symlink
@@ -68,6 +60,4 @@
     force: true
     state: link
 
-  notify:
-    - restart nginx
 

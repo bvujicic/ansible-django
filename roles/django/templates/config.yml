@@ -22,7 +22,7 @@ django_redis:
   location: 'redis://{{ redis_host }}:6379/0'
 
 django_log:
-  path: '{{ project.path }}log'
+  path: '{{ project.log }}'
 
 django_email:
   backend: '{{ email_backend }}' # 'console', 'smtp'
@@ -35,7 +35,14 @@ django_admin:
   email: '{{ admin.email }}'
 
 django_static:
-  root: '{{ host.home }}static'
+  root: '{{ host.home }}static/'
+
+django_media:
+  root: '{{ host.home }}uploads/'
+
+django_log:
+  path: '{{ host.home }}log/'
+
 
 django_cloudinary:
   cloud_name: '{{ cloudinary_cloud_name }}'

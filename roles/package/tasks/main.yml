@@ -61,8 +61,8 @@
     - python-pycryptopp
 
 
-#- name: Install "hr_HR.UTF-8" locale
-##  locale_gen:
-##    name: hr_HR.UTF-8
-##    state: present
-#  shell: "locale-gen hr_HR.UTF-8; update-locale;"
+- name: Install "hr_HR.UTF-8" locale
+  locale_gen:
+    name: hr_HR.UTF-8
+    state: present
+  #shell: "locale-gen hr_HR.UTF-8; update-locale;"

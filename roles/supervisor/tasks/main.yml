@@ -1,6 +1,7 @@
 ---
 
 - name: SUPERVISOR | Install system packages
+  become: true
   apt:
     name: "{{ item }}"
     install_recommends: true

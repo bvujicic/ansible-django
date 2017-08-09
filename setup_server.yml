@@ -12,9 +12,9 @@
 #    - package
 #    - user
 #    - local-folders
-    - postgres
-    - redis
-    - nginx
-    - django
-    - gunicorn
+#    - postgres
+#    - redis
+#    - nginx
+#    - django
+#    - gunicorn
     - supervisor

@@ -39,7 +39,7 @@ password={{ supervisor_password }}
 
 [program:django-application]
 
-command={{ project.env.path }}bin/gunicorn {{ project.name }}.wsgi:application -c {{ host.home }}conf/gunicorn.conf.py
+command={{ project.env.path }}bin/gunicorn {{ project_wsgi }}.wsgi:application -c {{ host.home }}conf/gunicorn.conf.py
 directory={{ project.path }}
 user={{ host.user }}
 autostart=true

@@ -8,7 +8,7 @@
     password: "{{ password }}"
     update_password: always
     shell: /bin/bash
-    groups: sudo
+#    groups: sudo
     append: true
     generate_ssh_key: true
     state: present

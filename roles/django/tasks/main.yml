@@ -10,6 +10,7 @@
 
 
 - name: SYSTEM | Create local directories
+  become: true
   file:
     path: "{{ project.path }}{{ item }}"
     state: directory
@@ -19,7 +20,9 @@
     - config
   when: deploy is not defined
 
+
 - name: SYSTEM | Set owner to '{{ host.user }}'
+  become: true
   file:
     dest: "{{ host.home }}"
     owner: "{{ host.user }}"
