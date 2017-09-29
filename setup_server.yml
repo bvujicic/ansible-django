@@ -17,4 +17,5 @@
 #    - nginx
 #    - django
 #    - gunicorn
-    - supervisor
+#    - supervisor
+    -

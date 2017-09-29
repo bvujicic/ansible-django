@@ -1,3 +1,3 @@
 #!/bin/bash -ex
 
-letsencrypt --renew certonly -n --webroot --webroot-path={{ host.home }}{{ project.name }} --agree-tos -m {{ letsencrypt.email }} {% for domain in domains %} -d {{ domain }}{% endfor %}
+letsencrypt --renew certonly -n --webroot --webroot-path={{ host.home }}{{ project.name }} --agree-tos -m {{ letsencrypt.email }} {% for domain in domains %} -d {{ domain }}{% endfor %}  --renew-hook "service nginx reload"

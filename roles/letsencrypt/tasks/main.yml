@@ -38,17 +38,17 @@
   when: skip_database is not defined
 
 
-- name: Execute Letsencrypt certificate script
-  become: true
-  shell: "{{ host.home }}letsencrypt-renew.sh"
-  when: skip_database is not defined
-
-
-- name: Create Letsencrypt cronjob for automatic certificate renewal
-  become: true
-  cron:
-    name: letsencrypt_renewal
-    special_time: weekly
-    job: "{{ host.home}}letsencrypt-renew.sh"
-  when: skip_database is not defined
-
+#- name: Execute Letsencrypt certificate script
+#  become: true
+#  shell: "{{ host.home }}letsencrypt-renew.sh"
+#  when: skip_database is not defined
+#
+#
+#- name: Create Letsencrypt cronjob for automatic certificate renewal
+#  become: true
+#  cron:
+#    name: letsencrypt_renewal
+#    special_time: weekly
+#    job: "{{ host.home}}letsencrypt-renew.sh"
+#  when: skip_database is not defined
+#
